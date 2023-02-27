@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-eval';" /> -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'" />
+    <link rel="stylesheet" type="text/css" href="../../../dist/css/bulma.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../../dist/css/style.css" />
+    <title>Create project</title>
+</head>
+
+<body>
+    <div class="columns">
+        <div class="column">
+            First column
+        </div>
+    </div>
+    <form class="container is-fluid py-4">
+        <div class="field">
+            <label class="label" for="new-project-input">Project name</label>
+            <div class="control">
+                <input class="input" placeholder="e.g. Goods for my store" type="text" id="new-project-input"
+                    name="new-project-input" required minlength="4" maxlength="20" size="25">
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label" for="new-project-input">Description</label>
+            <div class="control">
+                <textarea class="textarea" type="text" id="new-project-description" name="new-project-input" rows="3"
+                    cols="50"></textarea>
+            </div>
+        </div>
+
+        <button id="add-new-project-btn" class="button is-normal is-primary">Create</button>
+        <button id="close-window-btn" class="button is-normal is-light">Cancel</button>
+    </form>
+
+    <script src="renderer.js"></script>
+</body>
+
+</html>
