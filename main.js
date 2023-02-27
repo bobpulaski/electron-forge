@@ -13,6 +13,7 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1600,
     height: 900,
+    icon: path.join(__dirname, "src/windows/icon.ico"),
     autoHideMenuBar: true,
     // fullscreen: true,
     webPreferences: {
@@ -21,7 +22,7 @@ function createWindow() {
   });
 
   mainWindow.loadFile("./src/windows/main/index.html");
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 }
 
 process.on("uncaughtException", (err) => {
@@ -56,9 +57,26 @@ ipcMain.handle("get-main-menu-data", () => {
   return mainMenuData;
 });
 
+ipcMain.handle("get-sub-menu-data", () => {
+  const subMenuData = getMainMenuSub();
+  return subMenuData;
+});
+
 function getMainMenuData() {
   return new Promise((resolve, reject) => {
     db.all("SELECT * FROM projects", (err, res) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    });
+  });
+}
+
+function getMainMenuSub() {
+  return new Promise((resolve, reject) => {
+    db.all("SELECT * FROM parsers", (err, res) => {
       if (err) {
         reject(err);
       } else {
@@ -98,10 +116,11 @@ function openAddNewProjectWindow() {
     show: false,
     width: 600,
     height: 325, //add 29 px to the header
+    icon: path.join(__dirname, "src/windows/icon.ico"),
     autoHideMenuBar: true,
     resizable: false,
     parent: mainWindow,
-    frame: false,
+    frame: true,
     modal: true,
     maximizable: false,
     minimizable: false,
@@ -120,8 +139,8 @@ function openAddNewProjectWindow() {
 
 ipcMain.handle("close-window-btn", async (event) => {
   if (addNewProjectWindow) {
-    addNewProjectWindow.hide();
-    await addNewProjectWindow.close();
+    await addNewProjectWindow.hide();
+    addNewProjectWindow.close();
   }
 });
 

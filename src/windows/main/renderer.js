@@ -2,17 +2,35 @@ function getMainMenuItems() {
   return window.API.getMainMenuData();
 }
 
+function getSubMenuItems() {
+  return window.API.getSubMenuData();
+}
+
 //Load main menu
 renderMainMenuItems();
 
 function renderMainMenuItems() {
-  let list = "";
+  let mainItem = "";
+  let subItem = "";
+  let allItems = "";
+
   let text = document.getElementById("main-menu");
+  let jopa = document.getElementById("jopa");
+
   getMainMenuItems().then((mainMenuData) => {
     mainMenuData.forEach((item) => {
-      list += `<li>${item.title} <button id="${item.id}-del" class="delete-main-menu-item-btn">-</button> <button id="${item.id}-add" class="add-sub-menu-item-btn">+</button>`;
+      // list += `<li>${item.title} <button id="${item.id}-del" class="delete-main-menu-item-btn">-</button> <button id="${item.id}-add" class="add-sub-menu-item-btn">+</button>`;
+      mainItem += `<span class="headers">${item.title} (${item.id})</span>`;
+
+      getSubMenuItems().then((subMenuData) => {
+        subMenuData.forEach((item) => {
+          //mainItem += `<li>${item.title}</li>`;
+        });
+      });
     });
-    text.innerHTML = list;
+
+    text.innerHTML = mainItem;
+
     const deleteMainMenuItemBtn = document.querySelectorAll(
       ".delete-main-menu-item-btn"
     );
@@ -38,11 +56,9 @@ function deleteMainMenuItem(id) {
   return window.API.deleteMainMenuItem(id);
 }
 
-document
-  .getElementById("add-new-project-btn")
-  .addEventListener("click", () => {
-    window.API.openAddNewProjectWindow().then(() => {});
-  });
+document.getElementById("add-new-project-btn").addEventListener("click", () => {
+  window.API.openAddNewProjectWindow().then(() => {});
+});
 
 // Update Main Menu Via IPC
 window.API.onUpdateMenu((_event, value) => {

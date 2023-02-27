@@ -49,3 +49,8 @@ textarea {
 .nav-group-item {
     cursor: pointer;
 }
+
+span.headers {
+    cursor: pointer;
+    display: block;
+  }

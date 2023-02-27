@@ -2,6 +2,7 @@ const { ipcRenderer, contextBridge } = require("electron");
 
 contextBridge.exposeInMainWorld("API", {
   getMainMenuData: () => ipcRenderer.invoke("get-main-menu-data"),
+  getSubMenuData: () => ipcRenderer.invoke("get-sub-menu-data"),
 
   openAddNewProjectWindow: () =>
     ipcRenderer.invoke("open-add-new-project-window"),
