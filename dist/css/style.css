@@ -54,3 +54,15 @@ span.headers {
     cursor: pointer;
     display: block;
   }
+
+  ul li {
+    font-size: 13px;
+    list-style-type: square;
+    list-style-position: inside;
+    color: #a1a1a1;
+    padding: 5px;
+  }
+
+  .hide {
+    display: none;
+  }

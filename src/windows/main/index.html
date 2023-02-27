@@ -5,31 +5,31 @@
   <meta charset="UTF-8">
   <title>Jet Panda</title>
   <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self'" /> -->
-  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
-  <link rel="stylesheet" type="text/css" href="../../../dist/css/bulma.min.css" />
-  <link rel="stylesheet" type="text/css" href="../../../dist/css/style.css" />
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';"/>
+  <link rel="stylesheet" type="text/css" href="../../../dist/css/bulma.min.css"/>
+  <link rel="stylesheet" type="text/css" href="../../../dist/css/style.css"/>
   <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'none'" /> -->
 </head>
 
 <body>
-  <div class="app">
-    <div class="window">
-      <div class="window-content">
-        <div class="pane-group">
-          <div class="pane pane-sm sidebar">
-            <button class="button" id="add-new-project-btn">Create project</button>
-            <ul id="main-menu"></ul>
-          </div>
-          <div class="pane">
-            <p id="output">Click it to see the effect in this interface.</p>
-          </div>
+<div class="app">
+  <div class="window">
+    <div class="window-content">
+      <div class="pane-group">
+        <div class="pane pane-sm sidebar">
+          <button class="button" id="add-new-project-btn">Create project</button>
+          <div id="main-menu"></div>
+        </div>
+        <div class="pane">
         </div>
       </div>
     </div>
   </div>
+</div>
 
 
-  <script src="renderer.js"></script>
+<script src="renderer.js"></script>
+
 </body>
 
 </html>
