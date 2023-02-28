@@ -11,29 +11,22 @@ renderMainMenuItems();
 
 function renderMainMenuItems() {
   let mainItems = "";
-  let suka = "";
-
   let text = document.getElementById("main-menu");
   // list += `<li>${item.title} <button id="${item.id}-del" class="delete-main-menu-item-btn">-</button> <button id="${item.id}-add" class="add-sub-menu-item-btn">+</button>`;
-
-  suka = `<ul class="headers-ul hide">`;
   getMainMenuItems().then((mainMenuData) => {
     getSubMenuItems().then((subMenuData) => {
       mainMenuData.forEach((mainItem) => {
         mainItems += `<span class="headers">${mainItem.title} (${mainItem.id})</span>`;
         subMenuData.forEach((subItem) => {
           if (mainItem.id == subItem.project_id) {
-            mainItems += suka;
-            mainItems += `<li>${subItem.title} (${subItem.project_id})</li>`;
-            suka = "";
+            mainItems += `<li class="suka">${subItem.title} (${subItem.project_id})</li>`;
           } else {
             mainItems += `</ul>`;
           }
-          suka = '<ul class="headers-ul hide">';
         });
       });
       text.innerHTML = mainItems;
-      animateMainMenu();
+      //animateMainMenu();
     });
   });
 
