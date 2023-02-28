@@ -16,17 +16,19 @@ function renderMainMenuItems() {
   getMainMenuItems().then((mainMenuData) => {
     getSubMenuItems().then((subMenuData) => {
       mainMenuData.forEach((mainItem) => {
-        mainItems += `<span class="headers">${mainItem.title} (${mainItem.id})</span>`;
+        mainItems += `<span class="headers has-background-grey has-text-white mt-2">${mainItem.title} (${mainItem.id})</span><ul class="headers-ul hide">`;
         subMenuData.forEach((subItem) => {
           if (mainItem.id == subItem.project_id) {
-            mainItems += `<li class="suka">${subItem.title} (${subItem.project_id})</li>`;
-          } else {
-            mainItems += `</ul>`;
+            mainItems += `<li>${subItem.title} (${subItem.project_id})</li>`;
+          }
+          else {
+            console.log("suchka");
           }
         });
+        mainItems += `</ul>`;
       });
       text.innerHTML = mainItems;
-      //animateMainMenu();
+      animateMainMenu();
     });
   });
 
