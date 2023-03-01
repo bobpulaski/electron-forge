@@ -19,7 +19,7 @@ function renderMainMenuItems() {
         mainItems += `<span class="headers has-text-white p-4">${mainItem.title}</span><ul class="headers-ul hide">`;
         subMenuData.forEach((subItem) => {
           if (mainItem.id == subItem.project_id) {
-            mainItems += `<li>${subItem.title}</li>`;
+            mainItems += `<li class="sub-menu-item">${subItem.title}</li>`;
           }
         });
         mainItems += `</ul>`;
