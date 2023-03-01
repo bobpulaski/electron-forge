@@ -16,13 +16,10 @@ function renderMainMenuItems() {
   getMainMenuItems().then((mainMenuData) => {
     getSubMenuItems().then((subMenuData) => {
       mainMenuData.forEach((mainItem) => {
-        mainItems += `<span class="headers has-background-grey has-text-white mt-2">${mainItem.title} (${mainItem.id})</span><ul class="headers-ul hide">`;
+        mainItems += `<span class="headers has-text-white p-4">${mainItem.title}</span><ul class="headers-ul hide">`;
         subMenuData.forEach((subItem) => {
           if (mainItem.id == subItem.project_id) {
-            mainItems += `<li>${subItem.title} (${subItem.project_id})</li>`;
-          }
-          else {
-            console.log("suchka");
+            mainItems += `<li>${subItem.title}</li>`;
           }
         });
         mainItems += `</ul>`;
@@ -36,6 +33,10 @@ function renderMainMenuItems() {
     const h3s = document.querySelectorAll(".headers");
     h3s.forEach((h3) => {
       h3.addEventListener("click", () => {
+        h3s.forEach((h3) => {
+          h3.classList.remove("active-menu-item");
+        });
+        h3.classList.toggle("active-menu-item");
         console.log(h3.nextElementSibling);
         h3.nextElementSibling.classList.toggle("hide");
       });

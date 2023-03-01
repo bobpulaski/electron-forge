@@ -1,3 +1,4 @@
+
 body::-webkit-scrollbar {
         display: none;
         overflow: hidden;
@@ -41,9 +42,19 @@ textarea {
 .pane {
     overflow-y: auto;
     flex: 1;
-    border-left: 1px solid #ddd;
+    /* border-left: 1px solid #ddd; */
     position: relative;
-    padding: 1rem;
+    background-color: #F3F3F3;
+}
+
+.sidebar {
+    background-color: rgb(48, 56, 65);
+}
+
+
+.active-menu-item {
+    background-color: rgb(34, 38, 42);
+    border-left: solid hsl(217, 71%, 53%);
 }
 
 .nav-group-item {
@@ -56,11 +67,15 @@ span.headers {
   }
 
   ul li {
-    font-size: 13px;
+    /* font-size: 13px; */
     list-style-type: square;
     list-style-position: inside;
+    cursor: pointer;
+    /* display: block; */
     color: #a1a1a1;
+    
     padding: 5px;
+    margin-left: 1.5rem;
   }
 
   .hide {
