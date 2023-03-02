@@ -43,6 +43,10 @@ function renderMainMenuItems() {
     });
   }
 
+  function start() {
+    Push.create("Hello World!");
+  }
+
   const deleteMainMenuItemBtn = document.querySelectorAll(
     ".delete-main-menu-item-btn"
   );

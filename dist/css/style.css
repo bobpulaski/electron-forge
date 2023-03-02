@@ -81,3 +81,9 @@ span.headers {
   .hide {
     display: none;
   }
+
+  .swal {
+    font-size: .5rem !important;
+    background-color: rgb(0, 92, 102) !important;
+    color: #F3F3F3 !important;
+  }
