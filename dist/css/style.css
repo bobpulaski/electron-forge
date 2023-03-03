@@ -1,4 +1,11 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+
+* {
+    font-family: 'Source Sans Pro', sans-serif !important;
+    letter-spacing: .02rem;
+}
+
 body::-webkit-scrollbar {
         display: none;
         overflow: hidden;
@@ -61,6 +68,13 @@ span.headers {
     cursor: pointer;
     display: block;
     border-left: solid rgb(48, 56, 65);
+
+    -webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 span.headers:hover {
     background-color: rgb(34, 38, 42) !important;
@@ -71,11 +85,25 @@ span.headers:hover {
     background-color: rgb(34, 38, 42) !important;
 }
 
-span.headers:after {
-    content: '\203A';
+/* span.headers:after {
+    content: '\27A7';
     position: relative;
     float: right;
+    font-weight: bold;
+} */
+
+.arrow::after {
+    content: '\002B';
+    position: relative;
+    float: right;
+    /* font-weight: bold; */
+    font-style: normal;
 }
+
+.arrow-rotate::after {
+    content: "\2212";
+}
+
 
   ul li {
     /* font-size: 13px; */
@@ -87,6 +115,13 @@ span.headers:after {
     
     padding: 5px;
     margin-left: 1.5rem;
+
+    -webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
   }
 
   .hide {

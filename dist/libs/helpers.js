@@ -1,7 +1,7 @@
-function sweetAlert(title) {
+function sweetAlert({title, icon}) {
   Swal.fire({
     position: "top-end",
-    icon: "success",
+    icon: icon,
     title: title,
     showConfirmButton: false,
     timer: 2500,
