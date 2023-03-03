@@ -43,10 +43,6 @@ function renderMainMenuItems() {
     });
   }
 
-  function start() {
-    Push.create("Hello World!");
-  }
-
   const deleteMainMenuItemBtn = document.querySelectorAll(
     ".delete-main-menu-item-btn"
   );
@@ -79,4 +75,5 @@ document.getElementById("add-new-project-btn").addEventListener("click", () => {
 // Update Main Menu Via IPC
 window.API.onUpdateMenu((_event, value) => {
   renderMainMenuItems();
+  sweetAlert("The project has just been created", "success");
 });

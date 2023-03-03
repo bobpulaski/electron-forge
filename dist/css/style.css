@@ -52,10 +52,6 @@ textarea {
 }
 
 
-.active-menu-item {
-    background-color: rgb(34, 38, 42);
-    border-left: solid hsl(217, 71%, 53%);
-}
 
 .nav-group-item {
     cursor: pointer;
@@ -64,7 +60,22 @@ textarea {
 span.headers {
     cursor: pointer;
     display: block;
-  }
+    border-left: solid rgb(48, 56, 65);
+}
+span.headers:hover {
+    background-color: rgb(34, 38, 42) !important;
+}
+
+.active-menu-item {
+    border-left: solid hsl(217, 71%, 53%) !important;
+    background-color: rgb(34, 38, 42) !important;
+}
+
+span.headers:after {
+    content: '\203A';
+    position: relative;
+    float: right;
+}
 
   ul li {
     /* font-size: 13px; */

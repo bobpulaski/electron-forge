@@ -22,7 +22,7 @@
             <div id="main-menu"></div>
           </div>
           <div class="pane">
-
+            <button id="sweet-btn">Sweet</button>
           </div>
         </div>
       </div>
@@ -32,23 +32,8 @@
 
   <script src="../../../dist/libs/jquery-3.6.3.min.js"></script>
   <script src="../../../node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
+  <script src="../../../dist/libs/helpers.js"></script>
   <script src="renderer.js"></script>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function (event) {
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Your work has been saved',
-        showConfirmButton: false,
-        timer: 2500,
-        backdrop: false,
-        // width: 300,
-        customClass: 'swal'
-
-      })
-    });
-  </script>
 
 </body>
 
