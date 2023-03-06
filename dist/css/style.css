@@ -69,7 +69,6 @@ span.headers {
     display: block;
     border-left: solid rgb(48, 56, 65);
 
-    -webkit-touch-callout: none;
 	-webkit-user-select: none;
 	-khtml-user-select: none;
 	-moz-user-select: none;
@@ -81,7 +80,8 @@ span.headers:hover {
 }
 
 .active-menu-item {
-    border-left: solid hsl(217, 71%, 53%) !important;
+    /* border-left: solid hsl(217, 71%, 53%) !important; */
+    border-left: solid hsl(171, 100%, 41%) !important;
     background-color: rgb(34, 38, 42) !important;
 }
 
@@ -116,7 +116,6 @@ span.headers:hover {
     padding: 5px;
     margin-left: 1.5rem;
 
-    -webkit-touch-callout: none;
 	-webkit-user-select: none;
 	-khtml-user-select: none;
 	-moz-user-select: none;
@@ -132,4 +131,14 @@ span.headers:hover {
     font-size: .5rem !important;
     background-color: rgb(0, 92, 102) !important;
     color: #F3F3F3 !important;
+  }
+
+  /* Bulma override */
+
+  .tabs a {
+    margin-bottom: -6px;
+  }
+
+  .box {
+    box-shadow: none !important;
   }

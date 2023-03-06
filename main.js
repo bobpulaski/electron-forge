@@ -2,6 +2,7 @@ const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const fs = require("fs");
 const { dialog } = require("electron");
+const { log } = require("console");
 const remote = require("electron").remote;
 
 const sqlite3 = require("sqlite3").verbose();
@@ -164,6 +165,23 @@ function postMainMenuData(mainMenuItem) {
           resolve(res);
         }
       };
+  });
+}
+
+ipcMain.handle("get-urls", (event, parserId) => {
+  const urls = getUrls(parserId);
+  return urls;
+});
+
+function getUrls(parserId) {
+  return new Promise((resolve, reject) => {
+    db.all("SELECT * FROM urls WHERE parser_id=?", [parserId], (err, res) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    });
   });
 }
 
