@@ -51,14 +51,7 @@ function renderMainMenuItems() {
         let rulesContent = "";
         let settingsContent = "";
         getUrls(parserId).then((urls) => {
-          urlsContent += `<div class="box m-4">`;
-          urlsContent += `<div class="columns">
-              <div class="column"><h1 class="is-size-3">URL's</h1></div>
-              <div class="column is-narrow"><button class="button is-primary">Add URL</button></div>
-            </div>`;
-          urlsContent += `<div class="table-container">`;
-          urlsContent += `<table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">`;
-          urlsContent += `<tr><th>#</th><th>Title</th></tr>`;
+          urlsContent += urlsTableContent();
 
           urls.forEach((url) => {
             urlsContent += `<tr><td>${url.id}</td><td>${url.title}</td></tr>`;
