@@ -1,3 +1,5 @@
+const mainTabs = document.getElementById("main-tabs"); //Get All Tabs
+
 function renderMainMenuItems() {
   let mainItems = "";
   let text = document.getElementById("main-menu");
@@ -5,13 +7,13 @@ function renderMainMenuItems() {
   getMainMenuItems().then((mainMenuData) => {
     getSubMenuItems().then((subMenuData) => {
       mainMenuData.forEach((mainItem) => {
-        mainItems += `<span class="headers has-text-white p-4 left">${mainItem.title}<i class="arrow"></i></span><ul class="headers-ul hide">`;
+        mainItems += `<span class="headers has-text-light p-4 left">${mainItem.title}<i class="arrow"></i></span><ul class="headers-ul hide">`;
         subMenuData.forEach((subItem) => {
           if (mainItem.id == subItem.project_id) {
             mainItems += `<li class="sub-menu-item" data-projectid="${subItem.id}">${subItem.title}</li>`;
           }
         });
-        mainItems += `</ul>`;
+        mainItems += `<li class = "add-submenu-item-btn"><span class="mr-3">+</span>Add a new parser</li></ul>`;
       });
       text.innerHTML = mainItems;
       animateMainMenu();
@@ -21,7 +23,7 @@ function renderMainMenuItems() {
 
   function animateMainMenu() {
     const h3s = document.querySelectorAll(".headers");
-    const arrows = document.querySelectorAll(".arrow");
+    // const arrows = document.querySelectorAll(".arrow");
     h3s.forEach((h3) => {
       h3.addEventListener("click", () => {
         h3.firstElementChild.classList.toggle("arrow-rotate");
@@ -39,33 +41,96 @@ function renderMainMenuItems() {
   );
 
   const addSubMenuItemBtn = document.querySelectorAll(".add-sub-menu-item-btn");
+}
 
-  function parserMenuAction() {
-    const subMenuItems = document.querySelectorAll(".sub-menu-item");
-    const mainContent = document.getElementById("main-content");
+function parserMenuAction() {
+  const subMenuItems = document.querySelectorAll(".sub-menu-item");
+  const mainContent = document.getElementById("main-content");
+  const addSubmenuItemBtns = document.querySelectorAll(".add-submenu-item-btn");
 
-    subMenuItems.forEach((subMenuItem) => {
-      subMenuItem.addEventListener("click", () => {
-        const parserId = subMenuItem.dataset.projectid;
-        let urlsContent = "";
-        let rulesContent = "";
-        let settingsContent = "";
-        getUrls(parserId).then((urls) => {
-          urlsContent += urlsTableContent();
+  addSubmenuItemBtns.forEach((addSubmenuItemBtn) => {
+    addSubmenuItemBtn.addEventListener("click", () => {
+      console.log("addSubmenuItemBtn");
+    });
+  });
 
-          urls.forEach((url) => {
-            urlsContent += `<tr><td>${url.id}</td><td>${url.title}</td></tr>`;
+  subMenuItems.forEach((subMenuItem) => {
+    subMenuItem.addEventListener("click", () => {
+      mainTabs.classList.remove("hide");
+      document.getElementById("")
+      subMenuItems.forEach((subMenuItem) => {
+        subMenuItem.classList.remove("active-submenu-item");
+      });
+      subMenuItem.classList.add("active-submenu-item");
+
+      let urlsContent = "";
+      let rulesContent = "";
+      let settingsContent = "";
+
+      const parserId = subMenuItem.dataset.projectid; //Get SubMenu Item ID By data-id
+
+      getUrls(parserId).then((urls) => {
+        urlsContent = renderUrlsTableContent(); // Get From Dom.js Part Of Html For Render Table
+        urls.forEach((url) => {
+          urlsContent += `<tr>
+                            <td>${url.id}</td>
+                            <td>${url.parser_id}</td>
+                            <td>${url.title}</td>
+                          </tr>`;
+        });
+        urlsContent += `</div></div></div>`;
+
+        getRules(parserId).then((rules) => {
+          rulesContent = renderRulesTableContent();
+          rules.forEach((rule) => {
+            let startReplace = rule.start.replaceAll("<", "&lt;");
+            let endReplace = rule.end.replaceAll("<", "&lt;");
+            rulesContent += `<tr>
+                              <td>${rule.id}</td>
+                              <td>${rule.parser_id}</td>
+                              <td>${rule.header}</td>
+                              <td>${startReplace}</td>
+                              <td>${endReplace}</td>
+                            </tr>`;
           });
-          urlsContent += `</div></div></div>`;
+          rulesContent += `</div></div></div>`;
           mainContent.innerHTML = urlsContent;
+          mainContent.innerHTML += rulesContent;
         });
       });
     });
-  }
+  });
 }
 
 function getUrls(parserId) {
   return window.API.getUrls(parserId);
+}
+
+function getRules(parserId) {
+  return window.API.getRules(parserId);
+}
+
+const tabItems = document.querySelectorAll(".tab-item");
+tabItems.forEach((tabItem) => {
+  tabItem.addEventListener("click", () => {
+    tabItems.forEach((tabItem) => {
+      tabItem.classList.remove("is-active");
+    });
+    tabItem.classList.add("is-active");
+  });
+});
+
+function sweetAlert({ title, icon }) {
+  Swal.fire({
+    position: "top-end",
+    icon: icon,
+    title: title,
+    showConfirmButton: false,
+    timer: 2500,
+    backdrop: false,
+    // width: 300,
+    customClass: "swal",
+  });
 }
 
 //   deleteMainMenuItemBtn.forEach((elem) => {
@@ -81,16 +146,3 @@ function getUrls(parserId) {
 //     });
 //   });
 // });
-
-function sweetAlert({ title, icon }) {
-  Swal.fire({
-    position: "top-end",
-    icon: icon,
-    title: title,
-    showConfirmButton: false,
-    timer: 2500,
-    backdrop: false,
-    // width: 300,
-    customClass: "swal",
-  });
-}

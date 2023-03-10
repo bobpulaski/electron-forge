@@ -36,6 +36,8 @@ process.on("uncaughtException", (err) => {
   //app.exit(1);
 });
 
+app.disableHardwareAcceleration();
+
 app.whenReady().then(() => {
   createWindow();
 });
@@ -176,6 +178,23 @@ ipcMain.handle("get-urls", (event, parserId) => {
 function getUrls(parserId) {
   return new Promise((resolve, reject) => {
     db.all("SELECT * FROM urls WHERE parser_id=?", [parserId], (err, res) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    });
+  });
+}
+
+ipcMain.handle("get-rules", (event, parserId) => {
+  const rules = getRules(parserId);
+  return rules;
+});
+
+function getRules(parserId) {
+  return new Promise((resolve, reject) => {
+    db.all("SELECT * FROM rules WHERE parser_id=?", [parserId], (err, res) => {
       if (err) {
         reject(err);
       } else {

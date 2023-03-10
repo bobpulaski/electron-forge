@@ -107,11 +107,11 @@ span.headers:hover {
 
   ul li {
     /* font-size: 13px; */
-    list-style-type: square;
+    list-style-type: disc;
     list-style-position: inside;
     cursor: pointer;
     /* display: block; */
-    color: #a1a1a1;
+    color: #949fa5;
     
     padding: 5px;
     margin-left: 1.5rem;
@@ -121,6 +121,14 @@ span.headers:hover {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+  }
+
+  .add-submenu-item-btn {
+    list-style-type: none;
+  }
+
+  .add-submenu-item-btn {
+    color: #567a6b;
   }
 
   .hide {
@@ -139,6 +147,11 @@ span.headers:hover {
     margin-bottom: -6px;
   }
 
-  .box {
+.box {
     box-shadow: none !important;
   }
+
+.active-submenu-item, .sub-menu-item:hover, .add-submenu-item-btn:hover {
+    color: #fff;
+  }
+
