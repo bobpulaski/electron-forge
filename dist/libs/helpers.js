@@ -54,9 +54,12 @@ function renderMainMenuItems() {
     subMenuItems.forEach((subMenuItem) => {
       subMenuItem.addEventListener("click", () => {
         mainTabs.classList.remove("hide");
-        document.getElementById("tab-item-urls").classList.add("is-active");
+        console.log(window.global);
 
-        document.getElementById("");
+        // document.getElementById("tab-item-urls").classList.add("is-active");
+        document.getElementById(window.global).classList.add("is-active");
+
+        // document.getElementById("");
         subMenuItems.forEach((subMenuItem) => {
           subMenuItem.classList.remove("active-submenu-item");
         });
@@ -109,8 +112,11 @@ function renderMainMenuItems() {
     return window.API.getRules(parserId);
   }
 
+  window.global = "tab-item-urls";
+
   tabItems.forEach((tabItem) => {
     tabItem.addEventListener("click", () => {
+      window.global = tabItem.id;
       switch (tabItem.id) {
         case "tab-item-urls":
           document.getElementById("urls").classList.remove("hide");
