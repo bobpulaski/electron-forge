@@ -55,17 +55,12 @@ app.on("window-all-closed", () => {
   }
 });
 
-ipcMain.handle("get-main-menu-data", () => {
-  const mainMenuData = getMainMenuData();
-  return mainMenuData;
+ipcMain.handle("get-main-menu-items", () => {
+  const mainMenuItems = getMainMenuItems();
+  return mainMenuItems;
 });
 
-ipcMain.handle("get-sub-menu-data", () => {
-  const subMenuData = getMainMenuSub();
-  return subMenuData;
-});
-
-function getMainMenuData() {
+function getMainMenuItems() {
   return new Promise((resolve, reject) => {
     db.all("SELECT * FROM projects", (err, res) => {
       if (err) {
@@ -77,7 +72,12 @@ function getMainMenuData() {
   });
 }
 
-function getMainMenuSub() {
+ipcMain.handle("get-sub-menu-items", () => {
+  const subMenuItems = getSubMenuItems();
+  return subMenuItems;
+});
+
+function getSubMenuItems() {
   return new Promise((resolve, reject) => {
     db.all("SELECT * FROM parsers", (err, res) => {
       if (err) {

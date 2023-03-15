@@ -1,8 +1,8 @@
 const { ipcRenderer, contextBridge } = require("electron");
 
 contextBridge.exposeInMainWorld("API", {
-  getMainMenuData: () => ipcRenderer.invoke("get-main-menu-data"),
-  getSubMenuData: () => ipcRenderer.invoke("get-sub-menu-data"),
+  getMainMenuItems: () => ipcRenderer.invoke("get-main-menu-items"),
+  getSubMenuItems: () => ipcRenderer.invoke("get-sub-menu-items"),
   
   getUrls: (parserId) => ipcRenderer.invoke("get-urls", parserId),
   getRules: (parserId) => ipcRenderer.invoke("get-rules", parserId),

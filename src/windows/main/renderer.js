@@ -1,9 +1,9 @@
 function getMainMenuItems() {
-  return window.API.getMainMenuData();
+  return window.API.getMainMenuItems();
 }
 
 function getSubMenuItems() {
-  return window.API.getSubMenuData();
+  return window.API.getSubMenuItems();
 }
 
 //Load main menu

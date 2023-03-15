@@ -1,18 +1,17 @@
 const mainTabs = document.getElementById("main-tabs"); // Get Tabs Elements
 const tabItems = document.querySelectorAll(".tab-item");
-// const mainContentBoxIds =
 
 function renderMainMenuItems() {
   let mainItems = "";
   let mainMenuHtml = document.getElementById("main-menu");
   // list += `<li>${item.title} <button id="${item.id}-del" class="delete-main-menu-item-btn">-</button> <button id="${item.id}-add" class="add-sub-menu-item-btn">+</button>`;
-  getMainMenuItems().then((mainMenuData) => {
-    getSubMenuItems().then((subMenuData) => {
-      mainMenuData.forEach((mainItem) => {
-        mainItems += `<span class="headers has-text-light p-4 left">${mainItem.title}<i class="arrow"></i></span><ul class="headers-ul hide">`;
-        subMenuData.forEach((subItem) => {
-          if (mainItem.id == subItem.project_id) {
-            mainItems += `<li class="sub-menu-item" data-projectid="${subItem.id}">${subItem.title}</li>`;
+  getMainMenuItems().then((mainMenuItems) => {
+    getSubMenuItems().then((subMenuItems) => {
+      mainMenuItems.forEach((mainMenuItem) => {
+        mainItems += `<span class="headers has-text-light p-4 left">${mainMenuItem.title}<i class="arrow"></i></span><ul class="headers-ul hide">`;
+        subMenuItems.forEach((subMenuItem) => {
+          if (mainMenuItem.id == subMenuItem.project_id) {
+            mainItems += `<li class="sub-menu-item" data-projectid="${subMenuItem.id}">${subMenuItem.title}</li>`;
           }
         });
         mainItems += `<li class = "add-submenu-item-btn"><span class="mr-3">+</span>Add a new parser</li></ul>`;
