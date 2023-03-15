@@ -65,7 +65,9 @@ textarea {
 span.headers {
   cursor: pointer;
   display: block;
-  border-left: solid rgb(48, 56, 65);
+  /* border-left: solid rgb(48, 56, 65); */
+  font-size: 18px;
+  margin-bottom: 0.5rem;
 
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -104,7 +106,7 @@ span.headers:hover {
 
 ul li {
   /* font-size: 13px; */
-  list-style-type: disc;
+  /* list-style-type: disc; */
   list-style-position: inside;
   cursor: pointer;
   /* display: block; */
@@ -122,10 +124,13 @@ ul li {
 
 .add-submenu-item-btn {
   list-style-type: none;
+  color: #567a6b;
 }
 
-.add-submenu-item-btn {
-  color: #567a6b;
+.headers-ul {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid rgb(70 77 84);
+  padding-bottom: 1rem;
 }
 
 .hide {
@@ -152,4 +157,9 @@ ul li {
 .sub-menu-item:hover,
 .add-submenu-item-btn:hover {
   color: #fff;
+  margin-left: 0;
+  padding-left: 28px;
+
+  border-left: solid 1px hsl(171, 100%, 41%) !important;
+  background-color: rgb(34, 38, 42) !important;
 }

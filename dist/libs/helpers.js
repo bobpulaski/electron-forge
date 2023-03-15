@@ -1,20 +1,21 @@
 const mainTabs = document.getElementById("main-tabs"); // Get Tabs Elements
-const tabItems = document.querySelectorAll(".tab-item");
+window.global = "tab-item-urls";
 
 function renderMainMenuItems() {
+  let jaga = window.global;
   let mainItems = "";
   let mainMenuHtml = document.getElementById("main-menu");
   // list += `<li>${item.title} <button id="${item.id}-del" class="delete-main-menu-item-btn">-</button> <button id="${item.id}-add" class="add-sub-menu-item-btn">+</button>`;
   getMainMenuItems().then((mainMenuItems) => {
     getSubMenuItems().then((subMenuItems) => {
       mainMenuItems.forEach((mainMenuItem) => {
-        mainItems += `<span class="headers has-text-light p-4 left">${mainMenuItem.title}<i class="arrow"></i></span><ul class="headers-ul hide">`;
+        mainItems += `<span class="headers has-text-light p-4 left" data-title=${mainMenuItem.title}>${mainMenuItem.title}<i class="arrow"></i></span><ul class="headers-ul hide">`;
         subMenuItems.forEach((subMenuItem) => {
           if (mainMenuItem.id == subMenuItem.project_id) {
             mainItems += `<li class="sub-menu-item" data-projectid="${subMenuItem.id}">${subMenuItem.title}</li>`;
           }
         });
-        mainItems += `<li class = "add-submenu-item-btn"><span class="mr-3">+</span>Add a new parser</li></ul>`;
+        mainItems += `<li class = "add-submenu-item-btn"><span class="mr-2">+</span>Add a new parser</li></ul>`;
       });
       mainMenuHtml.innerHTML = mainItems;
       animateMainMenu();
@@ -29,9 +30,9 @@ function renderMainMenuItems() {
       h3.addEventListener("click", () => {
         h3.firstElementChild.classList.toggle("arrow-rotate");
         h3s.forEach((h3) => {
-          h3.classList.remove("active-menu-item");
+          // h3.classList.remove("active-menu-item");
         });
-        h3.classList.toggle("active-menu-item");
+        // h3.classList.toggle("active-menu-item");
         h3.nextElementSibling.classList.toggle("hide");
       });
     });
@@ -52,17 +53,14 @@ function renderMainMenuItems() {
 
     subMenuItems.forEach((subMenuItem) => {
       subMenuItem.addEventListener("click", () => {
-        mainTabs.classList.remove("hide");
-        console.log(window.global);
+        mainTabs.classList.remove("hide"); //Отображаем табулятор
 
-        // document.getElementById("tab-item-urls").classList.add("is-active");
-        document.getElementById(window.global).classList.add("is-active");
-
-        // document.getElementById("");
         subMenuItems.forEach((subMenuItem) => {
           subMenuItem.classList.remove("active-submenu-item");
+          subMenuItem.classList.remove("active-menu-item");
         });
         subMenuItem.classList.add("active-submenu-item");
+        subMenuItem.classList.add("active-menu-item");
 
         let urlsContent = "";
         let rulesContent = "";
@@ -97,6 +95,8 @@ function renderMainMenuItems() {
             rulesContent += `</div></div></div>`;
             mainContent.innerHTML = urlsContent;
             mainContent.innerHTML += rulesContent;
+
+            renderMainContentAndTabs(global);
           });
         });
       });
@@ -111,38 +111,56 @@ function renderMainMenuItems() {
     return window.API.getRules(parserId);
   }
 
-  window.global = "tab-item-urls";
-
+  // Нажатие на TAB
+  const tabItems = document.querySelectorAll(".tab-item");
   tabItems.forEach((tabItem) => {
     tabItem.addEventListener("click", () => {
-      window.global = tabItem.id;
-      switch (tabItem.id) {
-        case "tab-item-urls":
-          document.getElementById("urls").classList.remove("hide");
-          document.getElementById("rules").classList.add("hide");
-          // document.getElementById("settings").classList.add("hide");
-          break;
-        case "tab-item-rules":
-          document.getElementById("rules").classList.remove("hide");
-          document.getElementById("urls").classList.add("hide");
-          // document.getElementById("settings").classList.add("hide");
-          break;
-        case "tab-item-settings":
-          document.getElementById("rules").classList.add("hide");
-          document.getElementById("urls").classList.add("hide");
-          // document.getElementById("settings").classList.remove("hide");
-          break;
-
-        default:
-          break;
-      }
-
-      tabItems.forEach((tabItem) => {
-        tabItem.classList.remove("is-active");
-      });
-      tabItem.classList.add("is-active");
+      window.global = tabItem.id; //При нажатии на ТАБ запоминаем глобально ID вкладки
+      renderMainContentAndTabs(tabItem.id);
     });
   });
+
+  function renderMainContentAndTabs(jaga) {
+    switch (jaga) {
+      case "tab-item-urls":
+        document.getElementById("urls").classList.remove("hide");
+        document.getElementById("rules").classList.add("hide");
+        // document.getElementById("settings").classList.add("hide");
+
+        document.getElementById("tab-item-urls").classList.add("is-active");
+        document.getElementById("tab-item-rules").classList.remove("is-active");
+        document
+          .getElementById("tab-item-settings")
+          .classList.remove("is-active");
+
+        break;
+      case "tab-item-rules":
+        document.getElementById("rules").classList.remove("hide");
+        document.getElementById("urls").classList.add("hide");
+        // document.getElementById("settings").classList.add("hide");
+
+        document.getElementById("tab-item-urls").classList.remove("is-active");
+        document.getElementById("tab-item-rules").classList.add("is-active");
+        document
+          .getElementById("tab-item-settings")
+          .classList.remove("is-active");
+
+        break;
+      case "tab-item-settings":
+        document.getElementById("rules").classList.add("hide");
+        document.getElementById("urls").classList.add("hide");
+        // document.getElementById("settings").classList.remove("hide");
+
+        document.getElementById("tab-item-urls").classList.remove("is-active");
+        document.getElementById("tab-item-rules").classList.remove("is-active");
+        document.getElementById("tab-item-settings").classList.add("is-active");
+
+        break;
+
+      default:
+        break;
+    }
+  }
 
   function sweetAlert({ title, icon }) {
     Swal.fire({
@@ -177,3 +195,5 @@ function renderMainMenuItems() {
 //     });
 //   });
 // });
+
+// TODO Сделать кнопку в меню схлопывания и развертывания проектов
