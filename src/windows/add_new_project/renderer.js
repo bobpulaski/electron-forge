@@ -1,11 +1,7 @@
 const closeWindowBtn = document.getElementById("close-window-btn");
+const newProjectPnput = document.getElementById("new-project-input");
 
 document.getElementById("new-project-input").focus();
-
-closeWindowBtn.addEventListener("click", () => {
-  return window.API.closeWindow();
-});
-
 
 //******************************************************* */
 const addNewProjectBtn = document.getElementById("add-new-project-btn");
@@ -15,3 +11,15 @@ addNewProjectBtn.addEventListener("click", () => {
   window.API.addNewProject(newProjectInputValue);
 });
 //******************************************************* */
+
+// Закрытие по кнопке формы
+closeWindowBtn.addEventListener("click", () => {
+  return window.API.closeWindow();
+});
+
+// Закрытие по ESC
+document.addEventListener("keydown", function (e) {
+  if (e.key == "Escape") {
+    return window.API.closeWindow();
+  }
+});

@@ -9,10 +9,13 @@ function renderMainMenuItems() {
   getMainMenuItems().then((mainMenuItems) => {
     getSubMenuItems().then((subMenuItems) => {
       mainMenuItems.forEach((mainMenuItem) => {
-        mainItems += `<span class="headers has-text-light p-4 left" data-title=${mainMenuItem.title}>${mainMenuItem.title}<i class="arrow"></i></span><ul class="headers-ul hide">`;
+        mainItems += `<span class="headers has-text-light p-4 left" 
+        data-id="${mainMenuItem.id}" data-title="${mainMenuItem.title}">${mainMenuItem.title}<i class="arrow"></i></span><ul class="headers-ul hide">`;
+
         subMenuItems.forEach((subMenuItem) => {
           if (mainMenuItem.id == subMenuItem.project_id) {
-            mainItems += `<li class="sub-menu-item" data-projectid="${subMenuItem.id}">${subMenuItem.title}</li>`;
+            mainItems += `<li class="sub-menu-item" 
+              data-projectid="${subMenuItem.id}">${subMenuItem.title}</li>`;
           }
         });
         mainItems += `<li class = "add-submenu-item-btn"><span class="mr-2">+</span>Add a new parser</li></ul>`;
@@ -45,9 +48,11 @@ function renderMainMenuItems() {
       ".add-submenu-item-btn"
     );
 
+    // Обработка нажатия пункта добавления парсера
     addSubmenuItemBtns.forEach((addSubmenuItemBtn) => {
       addSubmenuItemBtn.addEventListener("click", () => {
-        console.log("addSubmenuItemBtn");
+        let projectId = addSubmenuItemBtn.parentNode.previousSibling.dataset.id;
+        openAddNewParserWindow(projectId);
       });
     });
 
@@ -97,6 +102,7 @@ function renderMainMenuItems() {
             mainContent.innerHTML += rulesContent;
 
             renderMainContentAndTabs(global);
+            renderBreadCrumbs(subMenuItem);
           });
         });
       });
@@ -162,24 +168,31 @@ function renderMainMenuItems() {
     }
   }
 
-  function sweetAlert({ title, icon }) {
-    Swal.fire({
-      position: "top-end",
-      icon: icon,
-      title: title,
-      showConfirmButton: false,
-      timer: 2500,
-      backdrop: false,
-      // width: 300,
-      customClass: "swal",
-    });
+  function renderBreadCrumbs(subMenuItem) {
+    document.getElementById("headerTitleForUrls").innerHTML =
+      '<span class="tag is-light mr-2">' +
+      subMenuItem.parentNode.previousSibling.innerText +
+      "</span>" +
+      '<span class="tag is-light">' +
+      subMenuItem.innerHTML +
+      "</span>";
+
+    document.getElementById("headerTitleForRules").innerHTML =
+      '<span class="tag is-light mr-2">' +
+      subMenuItem.parentNode.previousSibling.innerText +
+      "</span>" +
+      '<span class="tag is-light">' +
+      subMenuItem.innerHTML +
+      "</span>";
+  }
+
+  function openAddNewParserWindow(projectId) {
+    return window.API.openAddNewParserWindow(projectId);
   }
 
   const deleteMainMenuItemBtn = document.querySelectorAll(
     ".delete-main-menu-item-btn"
   );
-
-  const addSubMenuItemBtn = document.querySelectorAll(".add-sub-menu-item-btn");
 }
 
 //   deleteMainMenuItemBtn.forEach((elem) => {

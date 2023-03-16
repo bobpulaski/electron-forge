@@ -3,12 +3,15 @@ const { ipcRenderer, contextBridge } = require("electron");
 contextBridge.exposeInMainWorld("API", {
   getMainMenuItems: () => ipcRenderer.invoke("get-main-menu-items"),
   getSubMenuItems: () => ipcRenderer.invoke("get-sub-menu-items"),
-  
+
   getUrls: (parserId) => ipcRenderer.invoke("get-urls", parserId),
   getRules: (parserId) => ipcRenderer.invoke("get-rules", parserId),
 
   openAddNewProjectWindow: () =>
     ipcRenderer.invoke("open-add-new-project-window"),
+
+  openAddNewParserWindow: (projectId) =>
+    ipcRenderer.invoke("open-add-new-parser-window", projectId),
 
   postMainMenuData: (mainMenuItem) =>
     ipcRenderer.invoke("post-main-menu-data", mainMenuItem),

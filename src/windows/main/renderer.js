@@ -23,6 +23,19 @@ window.API.onUpdateMenu((_event, value) => {
   sweetAlert({ title: "The project has just been created", icon: "success" });
 });
 
+function sweetAlert({ title, icon }) {
+  Swal.fire({
+    position: "top-end",
+    icon: icon,
+    title: title,
+    showConfirmButton: false,
+    timer: 2500,
+    backdrop: false,
+    // width: 300,
+    customClass: "swal",
+  });
+}
+
 //const addSubMenuItemBtn = document.querySelectorAll(".add-sub-menu-item-btn");
 
 //   deleteMainMenuItemBtn.forEach((elem) => {

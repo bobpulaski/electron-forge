@@ -67,7 +67,9 @@ span.headers {
   display: block;
   /* border-left: solid rgb(48, 56, 65); */
   font-size: 18px;
-  margin-bottom: 0.5rem;
+  /* margin-bottom: 0.5rem; */
+  /* border-bottom: 1px solid rgb(70 77 84); */
+  border-top: 1px solid rgb(70 77 84);
 
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -124,12 +126,13 @@ ul li {
 
 .add-submenu-item-btn {
   list-style-type: none;
-  color: #567a6b;
+  /* color: #567a6b; */
+  color: #00d1b2;
 }
 
 .headers-ul {
-  margin-bottom: 2rem;
-  border-bottom: 1px solid rgb(70 77 84);
+  /* margin-bottom: 2rem; */
+  /* border-bottom: 1px solid rgb(70 77 84); */
   padding-bottom: 1rem;
 }
 

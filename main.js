@@ -97,18 +97,38 @@ ipcMain.handle("delete-main-menu-item", (event, id) => {
   }
 });
 
-ipcMain.handle("add-sub-menu-item-btn", (event, id) => {
-  try {
-    db.run("INSERT INTO parsers (project_id, title) VALUES (?, ?)", [
-      id,
-      "suka",
-    ]);
-  } catch (error) {
-    console.log(error);
-  }
+/***********************New Parser Window*************************************** */
+ipcMain.handle("open-add-new-parser-window", (event) => {
+  openAddNewParserWindow();
 });
 
+let addNewParserWindow = null;
+function openAddNewParserWindow() {
+  addNewProjectWindow = new BrowserWindow({
+    show: false,
+    width: 600,
+    height: 325, //add 29 px to the header
+    icon: path.join(__dirname, "src/windows/icon.ico"),
+    autoHideMenuBar: true,
+    resizable: false,
+    parent: mainWindow,
+    frame: true,
+    modal: true,
+    maximizable: false,
+    minimizable: false,
+    skipTaskbar: true,
+    webPreferences: {
+      preload: path.join(__dirname, "src/windows/add_new_parser/preload.js"),
+    },
+  });
+  addNewProjectWindow.loadFile("./src/windows/add_new_parser/index.html");
+  addNewProjectWindow.once("ready-to-show", () => {
+    addNewProjectWindow.show();
+  });
+}
 /******************************************************************************* */
+
+/***********************New Project Window*************************************** */
 ipcMain.handle("open-add-new-project-window", (event) => {
   openAddNewProjectWindow();
 });
