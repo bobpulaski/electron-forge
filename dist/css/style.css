@@ -65,6 +65,7 @@ textarea {
 span.headers {
   cursor: pointer;
   display: block;
+  padding: 0.7rem 0.7rem 0.7rem 1.2rem;
   /* border-left: solid rgb(48, 56, 65); */
   font-size: 18px;
   /* margin-bottom: 0.5rem; */
@@ -95,7 +96,8 @@ span.headers:hover {
 } */
 
 .arrow::after {
-  content: "\002B";
+  /* content: "\002B"; */
+  content: "\25B8";
   position: relative;
   float: right;
   /* font-weight: bold; */
@@ -103,7 +105,8 @@ span.headers:hover {
 }
 
 .arrow-rotate::after {
-  content: "\2212";
+  /* content: "\2212"; */
+  transform: rotate(90deg);
 }
 
 ul li {
@@ -165,4 +168,39 @@ ul li {
 
   border-left: solid 1px hsl(171, 100%, 41%) !important;
   background-color: rgb(34, 38, 42) !important;
+}
+
+#logo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: rgb(34, 38, 42);
+}
+
+#logo h1::before {
+  content: "\272A";
+  margin-right: 0.3rem;
+}
+
+#under-menu-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 1rem;
+  color: #fff;
+}
+
+#under-menu-bar img {
+  filter: invert(75%);
+  margin-top: 5px;
+}
+
+#under-menu-bar .img-button {
+  cursor: pointer;
+}
+
+#under-menu-bar .img-button:hover {
+  cursor: pointer;
+  filter: invert(50%);
 }

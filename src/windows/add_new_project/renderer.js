@@ -12,7 +12,7 @@ addNewProjectBtn.addEventListener("click", () => {
 });
 //******************************************************* */
 
-// Закрытие по кнопке формы
+// Закрытие по кнопке окна
 closeWindowBtn.addEventListener("click", () => {
   return window.API.closeWindow();
 });
@@ -23,3 +23,5 @@ document.addEventListener("keydown", function (e) {
     return window.API.closeWindow();
   }
 });
+
+// TODO Сделать кнопку скрытия панели главного меню

@@ -1,12 +1,17 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
+const { Menu } = require("electron");
 const path = require("path");
 const fs = require("fs");
 const { dialog } = require("electron");
 const { log } = require("console");
-const remote = require("electron").remote;
+// const remote = require("electron").remote;
+
+//const { globalShortcut } = require("electron");
 
 const sqlite3 = require("sqlite3").verbose();
-const db = new sqlite3.Database("./db/parser.sqlite");
+const db = new sqlite3.Database("parser.sqlite");
+
+//Menu.setApplicationMenu(null);
 
 let mainWindow = null;
 
@@ -16,6 +21,7 @@ function createWindow() {
     height: 900,
     icon: path.join(__dirname, "src/windows/icon.ico"),
     autoHideMenuBar: true,
+
     // fullscreen: true,
     webPreferences: {
       preload: path.join(__dirname, "src/windows/main/preload.js"),
@@ -54,6 +60,21 @@ app.on("window-all-closed", () => {
     app.quit();
   }
 });
+
+/* Disabled Refresh App */
+/* 
+
+app.on("browser-window-focus", function () {
+  globalShortcut.register("CommandOrControl+R", () => {
+    console.log("CommandOrControl+R is pressed: Shortcut Disabled");
+  });
+  globalShortcut.register("F5", () => {
+    console.log("F5 is pressed: Shortcut Disabled");
+  });
+});
+
+*/
+/* ****************************** */
 
 ipcMain.handle("get-main-menu-items", () => {
   const mainMenuItems = getMainMenuItems();
@@ -97,14 +118,14 @@ ipcMain.handle("delete-main-menu-item", (event, id) => {
   }
 });
 
-/***********************New Parser Window*************************************** */
+/***********************New Parser Window START*************************************** */
 ipcMain.handle("open-add-new-parser-window", (event) => {
   openAddNewParserWindow();
 });
 
 let addNewParserWindow = null;
 function openAddNewParserWindow() {
-  addNewProjectWindow = new BrowserWindow({
+  addNewParserWindow = new BrowserWindow({
     show: false,
     width: 600,
     height: 325, //add 29 px to the header
@@ -121,14 +142,22 @@ function openAddNewParserWindow() {
       preload: path.join(__dirname, "src/windows/add_new_parser/preload.js"),
     },
   });
-  addNewProjectWindow.loadFile("./src/windows/add_new_parser/index.html");
-  addNewProjectWindow.once("ready-to-show", () => {
-    addNewProjectWindow.show();
+  addNewParserWindow.loadFile("./src/windows/add_new_parser/index.html");
+  addNewParserWindow.once("ready-to-show", () => {
+    addNewParserWindow.show();
   });
 }
-/******************************************************************************* */
 
-/***********************New Project Window*************************************** */
+ipcMain.handle("close-add-new-parser-window", async (event) => {
+  if (addNewParserWindow) {
+    await addNewParserWindow.hide();
+    addNewParserWindow.close();
+  }
+});
+
+/***********************New Parser Window END*************************************** */
+
+/***********************New Project Window START*************************************** */
 ipcMain.handle("open-add-new-project-window", (event) => {
   openAddNewProjectWindow();
 });
@@ -158,14 +187,14 @@ function openAddNewProjectWindow() {
   });
   // addNewProjectWindow.webContents.openDevTools();
 }
-/******************************************************************************* */
-
 ipcMain.handle("close-window-btn", async (event) => {
   if (addNewProjectWindow) {
     await addNewProjectWindow.hide();
     addNewProjectWindow.close();
   }
 });
+
+/*****************New Project Window End****************************************** */
 
 ipcMain.handle("add-new-project", async (event, newProjectInputValue) => {
   postMainMenuData(newProjectInputValue);

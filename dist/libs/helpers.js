@@ -9,7 +9,7 @@ function renderMainMenuItems() {
   getMainMenuItems().then((mainMenuItems) => {
     getSubMenuItems().then((subMenuItems) => {
       mainMenuItems.forEach((mainMenuItem) => {
-        mainItems += `<span class="headers has-text-light p-4 left" 
+        mainItems += `<span class="headers has-text-light left" 
         data-id="${mainMenuItem.id}" data-title="${mainMenuItem.title}">${mainMenuItem.title}<i class="arrow"></i></span><ul class="headers-ul hide">`;
 
         subMenuItems.forEach((subMenuItem) => {
