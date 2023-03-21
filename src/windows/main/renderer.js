@@ -19,8 +19,8 @@ document.getElementById("add-new-project-btn").addEventListener("click", () => {
 
 // Update Main Menu Via IPC
 window.API.onUpdateMenu((_event, value) => {
-  renderMainMenuItems();
   sweetAlert({ title: "The project has just been created", icon: "success" });
+  renderMainMenuItems();
 });
 
 function sweetAlert({ title, icon }) {

@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const { Menu } = require("electron");
+
 const path = require("path");
 const fs = require("fs");
 const { dialog } = require("electron");
@@ -11,10 +12,15 @@ const { log } = require("console");
 const sqlite3 = require("sqlite3").verbose();
 const db = new sqlite3.Database("parser.sqlite");
 
+const { getMainMenuItems } = require("./queries.js");
+const { getSubMenuItems } = require("./queries.js");
+const { postMainMenuData } = require("./queries.js");
+const { getUrls } = require("./queries.js");
+const { getRules } = require("./queries.js");
+
 //Menu.setApplicationMenu(null);
 
 let mainWindow = null;
-
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1600,
@@ -81,34 +87,10 @@ ipcMain.handle("get-main-menu-items", () => {
   return mainMenuItems;
 });
 
-function getMainMenuItems() {
-  return new Promise((resolve, reject) => {
-    db.all("SELECT * FROM projects", (err, res) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(res);
-      }
-    });
-  });
-}
-
 ipcMain.handle("get-sub-menu-items", () => {
   const subMenuItems = getSubMenuItems();
   return subMenuItems;
 });
-
-function getSubMenuItems() {
-  return new Promise((resolve, reject) => {
-    db.all("SELECT * FROM parsers", (err, res) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(res);
-      }
-    });
-  });
-}
 
 ipcMain.handle("delete-main-menu-item", (event, id) => {
   try {
@@ -206,52 +188,15 @@ ipcMain.handle("add-new-project", async (event, newProjectInputValue) => {
   // mainWindow.reload();
 });
 
-function postMainMenuData(mainMenuItem) {
-  return new Promise((resolve, reject) => {
-    db.run("INSERT INTO projects (title) VALUES (?)", [mainMenuItem]),
-      (err, res) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(res);
-        }
-      };
-  });
-}
-
 ipcMain.handle("get-urls", (event, parserId) => {
   const urls = getUrls(parserId);
   return urls;
 });
 
-function getUrls(parserId) {
-  return new Promise((resolve, reject) => {
-    db.all("SELECT * FROM urls WHERE parser_id=?", [parserId], (err, res) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(res);
-      }
-    });
-  });
-}
-
 ipcMain.handle("get-rules", (event, parserId) => {
   const rules = getRules(parserId);
   return rules;
 });
-
-function getRules(parserId) {
-  return new Promise((resolve, reject) => {
-    db.all("SELECT * FROM rules WHERE parser_id=?", [parserId], (err, res) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(res);
-      }
-    });
-  });
-}
 
 // fs.writeFileSync("menu.json", await JSON.stringify(mainMenuData, null, 2));
 //let menuData = await JSON.parse(fs.readFileSync("menu.json", "utf8"));
