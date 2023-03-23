@@ -20,6 +20,7 @@ closeWindowBtn.addEventListener("click", () => {
 // Закрытие по ESC
 document.addEventListener("keydown", function (e) {
   if (e.key == "Escape") {
+    console.log("esc");
     return window.API.closeWindow();
   }
 });

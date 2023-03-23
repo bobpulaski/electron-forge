@@ -2,7 +2,7 @@ const mainTabs = document.getElementById("main-tabs"); // Get Tabs Elements
 window.global = "tab-item-urls";
 
 function renderMainMenuItems() {
-  let jaga = window.global;
+  // let jaga = window.global;
   let mainItems = "";
   let mainMenuHtml = document.getElementById("main-menu");
   // list += `<li>${item.title} <button id="${item.id}-del" class="delete-main-menu-item-btn">-</button> <button id="${item.id}-add" class="add-sub-menu-item-btn">+</button>`;
@@ -13,7 +13,7 @@ function renderMainMenuItems() {
         data-id="${mainMenuItem.id}" data-title="${mainMenuItem.title}">${mainMenuItem.title}<i class="arrow"></i></span><ul class="headers-ul hide">`;
 
         subMenuItems.forEach((subMenuItem) => {
-          if (mainMenuItem.id == subMenuItem.project_id) {
+          if (mainMenuItem.id === subMenuItem.project_id) {
             mainItems += `<li class="sub-menu-item" 
               data-parserid="${subMenuItem.id}">${subMenuItem.title}</li>`;
           }
@@ -89,12 +89,12 @@ function renderMainMenuItems() {
               let startReplace = rule.start.replaceAll("<", "&lt;");
               let endReplace = rule.end.replaceAll("<", "&lt;");
               rulesContent += `<tr>
-                              <td>${rule.id}</td>
-                              <td>${rule.parser_id}</td>
-                              <td>${rule.header}</td>
-                              <td>${startReplace}</td>
-                              <td>${endReplace}</td>
-                            </tr>`;
+                                 <td>${rule.id}</td>
+                                 <td>${rule.parser_id}</td>
+                                 <td>${rule.header}</td>
+                                 <td>${startReplace}</td>
+                                 <td>${endReplace}</td>
+                               </tr>`;
             });
             rulesContent += `</div></div></div>`;
             mainContent.innerHTML = urlsContent;

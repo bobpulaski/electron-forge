@@ -6,6 +6,4 @@ contextBridge.exposeInMainWorld("API", {
   addNewProject: (newProjectInputValue) => {
     ipcRenderer.invoke("add-new-project", newProjectInputValue);
   },
-
-  //suka: () => ipcRenderer.sendTo("tvar"),
 });
