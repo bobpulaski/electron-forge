@@ -105,6 +105,13 @@ ipcMain.handle("open-add-new-parser-window", (event) => {
   openAddNewParserWindow();
 });
 
+ipcMain.handle("close-add-new-parser-window", async (event) => {
+  if (addNewParserWindow) {
+    await addNewParserWindow.hide();
+    addNewParserWindow.close();
+  }
+});
+
 let addNewParserWindow = null;
 function openAddNewParserWindow() {
   addNewParserWindow = new BrowserWindow({
@@ -129,19 +136,18 @@ function openAddNewParserWindow() {
     addNewParserWindow.show();
   });
 }
-
-ipcMain.handle("close-add-new-parser-window", async (event) => {
-  if (addNewParserWindow) {
-    await addNewParserWindow.hide();
-    addNewParserWindow.close();
-  }
-});
-
 /***********************New Parser Window END*************************************** */
 
 /***********************New Project Window START*************************************** */
 ipcMain.handle("open-add-new-project-window", (event) => {
   openAddNewProjectWindow();
+});
+
+ipcMain.handle("close-window-btn", async (event) => {
+  if (addNewProjectWindow) {
+    await addNewProjectWindow.hide();
+    addNewProjectWindow.close();
+  }
 });
 
 let addNewProjectWindow = null;
@@ -169,13 +175,6 @@ function openAddNewProjectWindow() {
   });
   // addNewProjectWindow.webContents.openDevTools();
 }
-ipcMain.handle("close-window-btn", async (event) => {
-  if (addNewProjectWindow) {
-    await addNewProjectWindow.hide();
-    addNewProjectWindow.close();
-  }
-});
-
 /*****************New Project Window End****************************************** */
 
 ipcMain.handle("add-new-project", async (event, newProjectInputValue) => {
@@ -185,7 +184,6 @@ ipcMain.handle("add-new-project", async (event, newProjectInputValue) => {
     addNewProjectWindow.hide();
     await addNewProjectWindow.close();
   }
-  // mainWindow.reload();
 });
 
 ipcMain.handle("get-urls", (event, parserId) => {

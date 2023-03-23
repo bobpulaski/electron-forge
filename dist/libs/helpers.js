@@ -15,10 +15,10 @@ function renderMainMenuItems() {
         subMenuItems.forEach((subMenuItem) => {
           if (mainMenuItem.id == subMenuItem.project_id) {
             mainItems += `<li class="sub-menu-item" 
-              data-projectid="${subMenuItem.id}">${subMenuItem.title}</li>`;
+              data-parserid="${subMenuItem.id}">${subMenuItem.title}</li>`;
           }
         });
-        mainItems += `<li class = "add-submenu-item-btn"><span class="mr-2">+</span>Add a new parser</li></ul>`;
+        mainItems += `<li class = "add-new-parser-btn"><span class="mr-2">+</span>Add a new parser</li></ul>`;
       });
       mainMenuHtml.innerHTML = mainItems;
       animateMainMenu();
@@ -44,9 +44,7 @@ function renderMainMenuItems() {
   function parserMenuAction() {
     const subMenuItems = document.querySelectorAll(".sub-menu-item");
     const mainContent = document.getElementById("main-content");
-    const addSubmenuItemBtns = document.querySelectorAll(
-      ".add-submenu-item-btn"
-    );
+    const addSubmenuItemBtns = document.querySelectorAll(".add-new-parser-btn");
 
     // Обработка нажатия пункта добавления парсера
     addSubmenuItemBtns.forEach((addSubmenuItemBtn) => {
@@ -71,10 +69,11 @@ function renderMainMenuItems() {
         let rulesContent = "";
         let settingsContent = "";
 
-        const parserId = subMenuItem.dataset.projectid; //Get SubMenu Item ID By data-id
+        const parserId = subMenuItem.dataset.parserid; //Get SubMenu Item ID By data-id
 
         getUrls(parserId).then((urls) => {
           urlsContent = renderUrlsTableContent(); // Get From Dom.js Part Of Html For Render Table
+
           urls.forEach((url) => {
             urlsContent += `<tr>
                             <td>${url.id}</td>
@@ -102,7 +101,12 @@ function renderMainMenuItems() {
             mainContent.innerHTML += rulesContent;
 
             renderMainContentAndTabs(global);
-            renderBreadCrumbs(subMenuItem);
+            renderBreadCrumbs(subMenuItem, parserId);
+            document
+              .getElementById("add-url-btn")
+              .addEventListener("click", (element) => {
+                console.log(element.currentTarget.dataset.parserid);
+              });
           });
         });
       });
@@ -168,16 +172,20 @@ function renderMainMenuItems() {
     }
   }
 
-  function renderBreadCrumbs(subMenuItem) {
-    document.getElementById("headerTitleForUrls").innerHTML =
+  function renderBreadCrumbs(subMenuItem, parserId) {
+    document.getElementById("header-title-for-urls").innerHTML =
       '<span class="tag is-light mr-2">' +
       subMenuItem.parentNode.previousSibling.innerText +
-      "</span>" +
+      `</span>` +
       '<span class="tag is-light">' +
       subMenuItem.innerHTML +
-      "</span>";
+      `</span>` +
+      `<div class="columns">
+        <div class="column"><h2 class="is-size-3">URL's</h2></div>
+        <div class="column is-narrow"><button id="add-url-btn" class="button is-primary" data-parserid="${parserId}">Add URL</button></div>
+       </div>`;
 
-    document.getElementById("headerTitleForRules").innerHTML =
+    document.getElementById("header-title-for-rules").innerHTML =
       '<span class="tag is-light mr-2">' +
       subMenuItem.parentNode.previousSibling.innerText +
       "</span>" +

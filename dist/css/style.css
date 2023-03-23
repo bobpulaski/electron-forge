@@ -127,7 +127,7 @@ ul li {
   user-select: none;
 }
 
-.add-submenu-item-btn {
+.add-new-parser-btn {
   list-style-type: none;
   /* color: #567a6b; */
   color: #00d1b2;
@@ -161,7 +161,7 @@ ul li {
 
 .active-submenu-item,
 .sub-menu-item:hover,
-.add-submenu-item-btn:hover {
+.add-new-parser-btn:hover {
   color: #fff;
   margin-left: 0;
   padding-left: 28px;
