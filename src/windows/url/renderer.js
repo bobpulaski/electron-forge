@@ -5,6 +5,10 @@ document.addEventListener("keydown", function (e) {
   }
 });
 
+document.getElementById("close-window-btn").addEventListener("click", () => {
+  return window.API.closeUrlWindow();
+});
+
 window.API.sendSettings((event, settings) => {
   console.log(settings.windowMode);
 });
