@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+<!--    <meta http-equiv="Content-Security-Policy" content="default-src 'none'" />-->
+    <link rel="stylesheet" type="text/css" href="../../css/bulma.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<!--    <title>Add a new url</title>-->
+  </head>
+  <body>
+    <h1>Add a new url</h1>
+
+    <form class="container is-fluid py-4">
+      <div class="field">
+        <label class="label" for="new-url-input">Url</label>
+        <div class="control">
+          <input class="input" placeholder="e.g. https://sitename.com/product/table" type="text" id="new-url-input"
+                 name="new-url-input" minlength="4" maxlength="20" size="25">
+        </div>
+      </div>
+
+      <button id="url-btn" class="button is-normal is-primary">Create</button>
+      <button id="close-window-btn" class="button is-normal is-light">Cancel</button>
+    </form>
+
+    <script src="renderer.js"></script>
+  </body>
+</html>

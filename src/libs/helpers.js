@@ -79,6 +79,7 @@ function renderMainMenuItems() {
                             <td>${url.id}</td>
                             <td>${url.parser_id}</td>
                             <td>${url.title}</td>
+                            <td><button class="url-delete-btn" data-urlid="${url.id}">Edit ${url.id}</button></td>
                           </tr>`;
           });
           urlsContent += `</div></div></div>`;
@@ -97,15 +98,29 @@ function renderMainMenuItems() {
                                </tr>`;
             });
             rulesContent += `</div></div></div>`;
+
             mainContent.innerHTML = urlsContent;
             mainContent.innerHTML += rulesContent;
 
+            // Click on ".url-delete-button" and open UrlWindow
+            const urlDeleteBtns = document.querySelectorAll(".url-delete-btn");
+            urlDeleteBtns.forEach((urlDeleteBtn) => {
+              urlDeleteBtn.addEventListener("click", () => {
+                let parserId = urlDeleteBtn.dataset.urlid;
+                let windowMode = "edit";
+                openUrlWindow(parserId, windowMode);
+              });
+            });
+
             renderMainContentAndTabs(global);
             renderBreadCrumbs(subMenuItem, parserId);
+
             document
               .getElementById("add-url-btn")
               .addEventListener("click", (element) => {
-                console.log(element.currentTarget.dataset.parserid);
+                let parserId = element.currentTarget.dataset.parserid;
+                let windowMode = "add";
+                openUrlWindow(parserId, windowMode);
               });
           });
         });
@@ -119,6 +134,10 @@ function renderMainMenuItems() {
 
   function getRules(parserId) {
     return window.API.getRules(parserId);
+  }
+
+  function openUrlWindow(parserId, windowMode) {
+    return window.API.openUrlWindow(parserId, windowMode);
   }
 
   // Нажатие на TAB

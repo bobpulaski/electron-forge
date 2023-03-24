@@ -10,6 +10,7 @@ function renderUrlsTableContent() {
                 <th>ID</th>
                 <th>PARSER_ID</th>
                 <th>TITLE</th>
+                <th>ACTIONS</th>
               </tr>`;
 
   return urlsHtml;

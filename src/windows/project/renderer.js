@@ -1,5 +1,4 @@
 const closeWindowBtn = document.getElementById("close-window-btn");
-const newProjectPnput = document.getElementById("new-project-input");
 
 document.getElementById("new-project-input").focus();
 

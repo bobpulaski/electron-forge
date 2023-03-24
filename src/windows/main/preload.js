@@ -13,6 +13,9 @@ contextBridge.exposeInMainWorld("API", {
   openAddNewParserWindow: (projectId) =>
     ipcRenderer.invoke("open-add-new-parser-window", projectId),
 
+  openUrlWindow: (parserId, windowMode) =>
+    ipcRenderer.invoke("open-url-window", parserId, windowMode),
+
   postMainMenuData: (mainMenuItem) =>
     ipcRenderer.invoke("post-main-menu-data", mainMenuItem),
 
