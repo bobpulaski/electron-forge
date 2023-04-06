@@ -4,7 +4,8 @@ document.getElementById("new-project-input").focus();
 
 //******************************************************* */
 const addNewProjectBtn = document.getElementById("add-new-project-btn");
-addNewProjectBtn.addEventListener("click", () => {
+addNewProjectBtn.addEventListener("click", (e) => {
+  e.preventDefault();
   const newProjectInputValue =
     document.getElementById("new-project-input").value;
   window.API.addNewProject(newProjectInputValue);

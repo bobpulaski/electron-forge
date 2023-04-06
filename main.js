@@ -15,6 +15,7 @@ const db = new sqlite3.Database("parser.sqlite");
 const { getMainMenuItems } = require("./queries.js");
 const { getSubMenuItems } = require("./queries.js");
 const { postMainMenuData } = require("./queries.js");
+const { postUrl } = require("./queries.js");
 const { getUrls } = require("./queries.js");
 const { getRules } = require("./queries.js");
 
@@ -190,9 +191,10 @@ ipcMain.handle("close-url-window", async (event) => {
 
 let urlWindow = null;
 function openUrlWindow(parserId, windowMode) {
-  // let title = "";
-  // windowMode === "add" ? (title = "Add a new URL") : (title = "Edit URL");
+  let title = "";
+  windowMode === "add" ? (title = "Add URL") : (title = "Edit URL");
   urlWindow = new BrowserWindow({
+    title,
     show: false,
     width: 1200,
     height: 900, //add 29 px to the header
@@ -218,7 +220,7 @@ function openUrlWindow(parserId, windowMode) {
       urlWindow.show();
     })
     .then(function () {
-      // urlWindow.webContents.openDevTools();
+      urlWindow.webContents.openDevTools();
     });
   // urlWindow.once("ready-to-show", () => {
 }
@@ -227,10 +229,22 @@ function openUrlWindow(parserId, windowMode) {
 
 ipcMain.handle("add-new-project", async (event, newProjectInputValue) => {
   postMainMenuData(newProjectInputValue);
+
   mainWindow.webContents.send("update-menu");
   if (addNewProjectWindow) {
     addNewProjectWindow.hide();
     await addNewProjectWindow.close();
+  }
+});
+
+ipcMain.handle("add-new-url", async (event, parserId, newUrlInputValue) => {
+  postUrl(parserId, newUrlInputValue);
+
+  mainWindow.webContents.send("update-urls-table", parserId);
+
+  if (urlWindow) {
+    urlWindow.hide();
+    await urlWindow.close();
   }
 });
 

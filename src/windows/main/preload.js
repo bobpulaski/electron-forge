@@ -24,4 +24,7 @@ contextBridge.exposeInMainWorld("API", {
   addSubMenuItemBtn: (id) => ipcRenderer.invoke("add-sub-menu-item-btn", id),
 
   onUpdateMenu: (callback) => ipcRenderer.on("update-menu", callback),
+
+  onUpdateUrlsTable: (parserId) =>
+    ipcRenderer.on("update-urls-table", parserId),
 });

@@ -38,6 +38,22 @@ function postMainMenuData(mainMenuItem) {
   });
 }
 
+function postUrl(parserId, newUrlInputValue) {
+  return new Promise((resolve, reject) => {
+    db.run("INSERT INTO urls (parser_id, title) VALUES (?,?)", [
+      parserId,
+      newUrlInputValue,
+    ]),
+      (err, res) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(res);
+        }
+      };
+  });
+}
+
 function getUrls(parserId) {
   return new Promise((resolve, reject) => {
     db.all("SELECT * FROM urls WHERE parser_id=?", [parserId], (err, res) => {
@@ -66,6 +82,7 @@ module.exports = {
   getMainMenuItems,
   getSubMenuItems,
   postMainMenuData,
+  postUrl,
   getUrls,
   getRules,
 };

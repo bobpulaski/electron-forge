@@ -23,6 +23,12 @@ window.API.onUpdateMenu((_event, value) => {
   renderMainMenuItems();
 });
 
+// Update Urls Table Via IPC, эмулируя клик по пункту меню
+window.API.onUpdateUrlsTable((_event, parserId) => {
+  document.querySelector(`[data-parserid="${parserId}"]`).click();
+  sweetAlert({ title: "The URL has just been created", icon: "success" });
+});
+
 function sweetAlert({ title, icon }) {
   Swal.fire({
     position: "top-end",
