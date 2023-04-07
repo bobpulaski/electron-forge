@@ -13,19 +13,15 @@
 </head>
 
 <body>
-  <div id="header" class="container is-fluid py-4"></div>
-
-  <form class="container is-fluid py-4">
+  <form class="m-5">
+    <div id="place-header"></div>
     <div class="field">
-      <label class="label" for="new-url-input">Url</label>
-      <div class="control">
-        <input class="input" placeholder="e.g. https://sitename.com/product/table" type="text" id="new-url-input"
-          name="new-url-input" minlength="4" maxlength="" size="25">
-      </div>
+      <div id="place-input-url" class="control"></div>
     </div>
-
-    <button id="add-new-url-btn" class="button is-normal is-primary">Add</button>
-    <button id="close-window-btn" class="button is-normal is-light">Cancel</button>
+    <div class="field">
+      <button id="add-new-url-btn" class="button is-normal is-primary">Add</button>
+      <button id="close-window-btn" class="button is-normal is-light">Cancel</button>
+    </div>
   </form>
 
   <script type="module" src="renderer.js"></script>

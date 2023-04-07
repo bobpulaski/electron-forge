@@ -1,6 +1,4 @@
-import { headerTmplate } from "./htmls.js";
-
-document.getElementById("new-url-input").focus();
+import { headerTmplate, inputTemplate } from "./htmls.js";
 
 // Закрытие по ESC
 document.addEventListener("keydown", function (e) {
@@ -14,11 +12,17 @@ document.getElementById("close-window-btn").addEventListener("click", () => {
   return window.API.closeUrlWindow();
 });
 
-// Рендер заголовка
+// Рендер заголовка, поля ввода и присвоение кеопки id парсера
 window.API.sendSettings((event, settings) => {
-  document.getElementById("header").innerHTML = headerTmplate(
+  document.getElementById("place-header").innerHTML = headerTmplate(
     settings.windowMode
   );
+
+  document.getElementById("place-input-url").innerHTML = inputTemplate(
+    settings.windowMode
+  );
+  document.getElementById("new-url-input").focus();
+
   document.getElementById("add-new-url-btn").dataset.parserid =
     settings.parserId;
 });

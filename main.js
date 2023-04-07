@@ -197,7 +197,7 @@ function openUrlWindow(parserId, windowMode) {
     title,
     show: false,
     width: 1200,
-    height: 900, //add 29 px to the header
+    height: 800, //add 29 px to the header = 230
     icon: path.join(__dirname, "src/windows/icon.ico"),
     autoHideMenuBar: true,
     resizable: false,

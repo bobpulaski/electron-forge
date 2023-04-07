@@ -156,7 +156,7 @@ ul li {
 }
 
 .box {
-  box-shadow: none !important;
+  /* box-shadow: none !important; */
 }
 
 .active-submenu-item,
