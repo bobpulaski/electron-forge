@@ -13,8 +13,14 @@ contextBridge.exposeInMainWorld("API", {
   openAddNewParserWindow: (projectId) =>
     ipcRenderer.invoke("open-add-new-parser-window", projectId),
 
-  openUrlWindow: (parserId, windowMode) =>
-    ipcRenderer.invoke("open-url-window", parserId, windowMode),
+  openUrlWindow: (windowMode, parserId, urlId, urlTitle) =>
+    ipcRenderer.invoke(
+      "open-url-window",
+      windowMode,
+      parserId,
+      urlId,
+      urlTitle
+    ),
 
   postMainMenuData: (mainMenuItem) =>
     ipcRenderer.invoke("post-main-menu-data", mainMenuItem),
@@ -25,6 +31,6 @@ contextBridge.exposeInMainWorld("API", {
 
   onUpdateMenu: (callback) => ipcRenderer.on("update-menu", callback),
 
-  onUpdateUrlsTable: (parserId) =>
-    ipcRenderer.on("update-urls-table", parserId),
+  onUpdateUrlsTable: (parserId, mode) =>
+    ipcRenderer.on("update-urls-table", parserId, mode),
 });

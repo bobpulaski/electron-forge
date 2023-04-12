@@ -24,9 +24,11 @@ window.API.onUpdateMenu((_event, value) => {
 });
 
 // Update Urls Table Via IPC, эмулируя клик по пункту меню
-window.API.onUpdateUrlsTable((_event, parserId) => {
-  document.querySelector(`[data-parserid="${parserId}"]`).click();
-  sweetAlert({ title: "The URL has just been created", icon: "success" });
+window.API.onUpdateUrlsTable(async (_event, parserId, mode) => {
+  await document.querySelector(`[data-parserid="${parserId}"]`).click();
+  mode === "add"
+    ? sweetAlert({ title: "The URL has just been created", icon: "success" })
+    : sweetAlert({ title: "The URL has just been updated", icon: "success" });
 });
 
 function sweetAlert({ title, icon }) {

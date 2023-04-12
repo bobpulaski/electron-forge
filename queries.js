@@ -54,6 +54,20 @@ function postUrl(parserId, newUrlInputValue) {
   });
 }
 
+function updateUrl(urlInputValue, urlId) {
+  console.log(urlInputValue);
+  return new Promise((resolve, reject) => {
+    db.run("UPDATE urls SET title = ? WHERE id = ?", [urlInputValue, urlId]),
+      (err, res) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(res);
+        }
+      };
+  });
+}
+
 function getUrls(parserId) {
   return new Promise((resolve, reject) => {
     db.all("SELECT * FROM urls WHERE parser_id=?", [parserId], (err, res) => {
@@ -83,6 +97,7 @@ module.exports = {
   getSubMenuItems,
   postMainMenuData,
   postUrl,
+  updateUrl,
   getUrls,
   getRules,
 };

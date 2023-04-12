@@ -64,7 +64,10 @@ function parserMenuAction() {
                             <td>${url.id}</td>
                             <td>${url.parser_id}</td>
                             <td>${url.title}</td>
-                            <td><button class="url-delete-btn" data-urlid="${url.id}">Edit ${url.id}</button></td>
+                            <td>
+                              <button class="url-edit-btn" data-parserid="${url.parser_id}" data-urlid="${url.id}" data-urlTitle="${url.title}">Edit ${url.id}</button>
+                              <button class="url-delete-btn" data-urlid="${url.id}" data-urlTitle="${url.title}">Delete ${url.id}</button>
+                            </td>
                           </tr>`;
         });
         urlsContent += `</div></div></div>`;
@@ -87,13 +90,15 @@ function parserMenuAction() {
           mainContent.innerHTML = urlsContent;
           mainContent.innerHTML += rulesContent;
 
-          // Click on ".url-delete-button" and open UrlWindow
-          const urlDeleteBtns = document.querySelectorAll(".url-delete-btn");
-          urlDeleteBtns.forEach((urlDeleteBtn) => {
-            urlDeleteBtn.addEventListener("click", () => {
-              let parserId = urlDeleteBtn.dataset.urlid;
+          // Click on ".url-edit-button" and open UrlWindow
+          const urlEditBtns = document.querySelectorAll(".url-edit-btn");
+          urlEditBtns.forEach((urlEditBtn) => {
+            urlEditBtn.addEventListener("click", () => {
               let windowMode = "edit";
-              openUrlWindow(parserId, windowMode);
+              let parserId = urlEditBtn.dataset.parserid;
+              let urlId = urlEditBtn.dataset.urlid;
+              let urlTitle = urlEditBtn.dataset.urltitle;
+              openUrlWindow(windowMode, parserId, urlId, urlTitle);
             });
           });
 
@@ -103,9 +108,11 @@ function parserMenuAction() {
           document
             .getElementById("add-url-btn")
             .addEventListener("click", async (element) => {
-              let parserId = element.currentTarget.dataset.parserid;
               let windowMode = "add";
-              openUrlWindow(parserId, windowMode);
+              let parserId = element.currentTarget.dataset.parserid;
+              let urlId = null;
+              let urlTitle = null;
+              openUrlWindow(windowMode, parserId, urlId, urlTitle);
             });
         });
       });
@@ -113,8 +120,8 @@ function parserMenuAction() {
   });
 }
 
-function openUrlWindow(parserId, windowMode) {
-  return window.API.openUrlWindow(parserId, windowMode);
+function openUrlWindow(windowMode, parserId, urlId, urlTitle) {
+  return window.API.openUrlWindow(windowMode, parserId, urlId, urlTitle);
 }
 
 // Нажатие на TAB

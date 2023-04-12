@@ -16,6 +16,7 @@ const { getMainMenuItems } = require("./queries.js");
 const { getSubMenuItems } = require("./queries.js");
 const { postMainMenuData } = require("./queries.js");
 const { postUrl } = require("./queries.js");
+const { updateUrl } = require("./queries.js");
 const { getUrls } = require("./queries.js");
 const { getRules } = require("./queries.js");
 
@@ -178,9 +179,12 @@ function openAddNewProjectWindow() {
 
 /*************** New Url Window START **********************************************/
 
-ipcMain.handle("open-url-window", (event, parserId, windowMode) => {
-  openUrlWindow(parserId, windowMode);
-});
+ipcMain.handle(
+  "open-url-window",
+  (event, windowMode, parserId, urlId, urlTitle) => {
+    openUrlWindow(windowMode, parserId, urlId, urlTitle);
+  }
+);
 
 ipcMain.handle("close-url-window", async (event) => {
   if (urlWindow) {
@@ -190,7 +194,7 @@ ipcMain.handle("close-url-window", async (event) => {
 });
 
 let urlWindow = null;
-function openUrlWindow(parserId, windowMode) {
+function openUrlWindow(windowMode, parserId, urlId, urlTitle) {
   let title = "";
   windowMode === "add" ? (title = "Add URL") : (title = "Edit URL");
   urlWindow = new BrowserWindow({
@@ -214,7 +218,16 @@ function openUrlWindow(parserId, windowMode) {
   urlWindow
     .loadFile("./src/windows/url/index.html")
     .then(function () {
-      urlWindow.webContents.send("sendSettings", { windowMode, parserId });
+      urlWindow.webContents.send("sendSettings", {
+        windowMode,
+        parserId,
+        urlId,
+        urlTitle,
+      });
+      console.log("windowMode = " + windowMode);
+      console.log("parserId = " + parserId);
+      console.log("urlId = " + urlId);
+      console.log("urlTitle = " + urlTitle);
     })
     .then(function () {
       urlWindow.show();
@@ -237,14 +250,25 @@ ipcMain.handle("add-new-project", async (event, newProjectInputValue) => {
   }
 });
 
-ipcMain.handle("add-new-url", async (event, parserId, newUrlInputValue) => {
-  postUrl(parserId, newUrlInputValue);
+ipcMain.handle("add-new-url", async (event, parserId, urlInputValue) => {
+  postUrl(parserId, urlInputValue);
 
-  mainWindow.webContents.send("update-urls-table", parserId);
-
+  const mode = "add";
+  mainWindow.webContents.send("update-urls-table", parserId, mode);
   if (urlWindow) {
     urlWindow.hide();
     await urlWindow.close();
+  }
+});
+
+ipcMain.handle("edit-url", async (event, urlInputValue, urlId, parserId) => {
+  updateUrl(urlInputValue, urlId);
+
+  const mode = "edit";
+  await mainWindow.webContents.send("update-urls-table", parserId, mode);
+  if (urlWindow) {
+    urlWindow.hide();
+    urlWindow.close();
   }
 });
 
