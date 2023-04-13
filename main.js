@@ -177,7 +177,7 @@ function openAddNewProjectWindow() {
 }
 /*****************New Project Window END****************************************** */
 
-/*************** New Url Window START **********************************************/
+/*************** Url Window START **********************************************/
 
 ipcMain.handle(
   "open-url-window",
@@ -224,10 +224,6 @@ function openUrlWindow(windowMode, parserId, urlId, urlTitle) {
         urlId,
         urlTitle,
       });
-      console.log("windowMode = " + windowMode);
-      console.log("parserId = " + parserId);
-      console.log("urlId = " + urlId);
-      console.log("urlTitle = " + urlTitle);
     })
     .then(function () {
       urlWindow.show();
@@ -271,6 +267,56 @@ ipcMain.handle("edit-url", async (event, urlInputValue, urlId, parserId) => {
     urlWindow.close();
   }
 });
+
+ipcMain.handle(
+  "open-confirm-delete-url-window",
+  async (event, deleteWindowArgs) => {
+    console.log(deleteWindowArgs);
+    сonfirmDeleteUrlWindow(deleteWindowArgs);
+  }
+);
+
+ipcMain.handle("close-confirm-delete-window", async (event) => {
+  if (confirmDeleteUrlWindow) {
+    await confirmDeleteUrlWindow.hide();
+    confirmDeleteUrlWindow.close();
+  }
+});
+
+let confirmDeleteUrlWindow = null;
+function сonfirmDeleteUrlWindow(deleteWindowArgs) {
+  let title = "";
+  if (deleteWindowArgs.entityToDelete === "url") {
+    title = "Delete URL";
+  }
+  confirmDeleteUrlWindow = new BrowserWindow({
+    title: title,
+    show: false,
+    width: 1400,
+    height: 480, //add 29 px to the header = 230
+    icon: path.join(__dirname, "src/windows/icon.ico"),
+    autoHideMenuBar: true,
+    resizable: false,
+    parent: mainWindow,
+    frame: true,
+    modal: true,
+    maximizable: false,
+    minimizable: false,
+    skipTaskbar: true,
+    webPreferences: {
+      preload: path.join(__dirname, "src/windows/confirm-delete/preload.js"),
+    },
+  });
+  confirmDeleteUrlWindow
+    .loadFile("./src/windows/confirm-delete/index.html")
+    .then(function () {
+      confirmDeleteUrlWindow.show();
+    })
+    .then(function () {
+      confirmDeleteUrlWindow.webContents.openDevTools();
+    });
+  // confirmDeleteUrlWindow.once("ready-to-show", () => {
+}
 
 ipcMain.handle("get-urls", (event, parserId) => {
   const urls = getUrls(parserId);

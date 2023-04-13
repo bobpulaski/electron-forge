@@ -102,6 +102,19 @@ function parserMenuAction() {
             });
           });
 
+          // Click on ".url-delete-button" and open confirmDeleteUrlWindow
+          document
+            .querySelectorAll(".url-delete-btn")
+            .forEach((urlDeleteBtn) => {
+              urlDeleteBtn.addEventListener("click", () => {
+                const deleteWindowArgs = {
+                  entityId: urlDeleteBtn.dataset.urlid,
+                  entityToDelete: "url",
+                };
+                confirmDeleteUrlWindow(deleteWindowArgs); //Вызываем функцию открытия окна с передачей аргументов в виде объекта
+              });
+            });
+
           renderMainContentAndTabs(global);
           renderBreadCrumbs(subMenuItem, parserId);
 
@@ -118,6 +131,10 @@ function parserMenuAction() {
       });
     });
   });
+}
+
+function confirmDeleteUrlWindow(deleteWindowArgs) {
+  return window.API.confirmDeleteUrlWindow(deleteWindowArgs);
 }
 
 function openUrlWindow(windowMode, parserId, urlId, urlTitle) {

@@ -33,4 +33,8 @@ contextBridge.exposeInMainWorld("API", {
 
   onUpdateUrlsTable: (parserId, mode) =>
     ipcRenderer.on("update-urls-table", parserId, mode),
+
+  confirmDeleteUrlWindow: (deleteWindowArgs) => {
+    ipcRenderer.invoke("open-confirm-delete-url-window", deleteWindowArgs);
+  },
 });
