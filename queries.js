@@ -68,6 +68,19 @@ function updateUrl(urlInputValue, urlId) {
   });
 }
 
+function deleteEntity(entityToDelete, entityId) {
+  return new Promise((resolve, reject) => {
+    db.run("DELETE FROM urls WHERE id = ?", [entityId]),
+      (err, res) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(res);
+        }
+      };
+  });
+}
+
 function getUrls(parserId) {
   return new Promise((resolve, reject) => {
     db.all("SELECT * FROM urls WHERE parser_id=?", [parserId], (err, res) => {
@@ -98,6 +111,7 @@ module.exports = {
   postMainMenuData,
   postUrl,
   updateUrl,
+  deleteEntity,
   getUrls,
   getRules,
 };

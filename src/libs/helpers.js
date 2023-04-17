@@ -66,7 +66,7 @@ function parserMenuAction() {
                             <td>${url.title}</td>
                             <td>
                               <button class="url-edit-btn" data-parserid="${url.parser_id}" data-urlid="${url.id}" data-urlTitle="${url.title}">Edit ${url.id}</button>
-                              <button class="url-delete-btn" data-urlid="${url.id}" data-urlTitle="${url.title}">Delete ${url.id}</button>
+                              <button class="url-delete-btn" data-parserid="${url.parser_id}" data-urlid="${url.id}" data-urlTitle="${url.title}">Delete ${url.id}</button>
                             </td>
                           </tr>`;
         });
@@ -108,8 +108,10 @@ function parserMenuAction() {
             .forEach((urlDeleteBtn) => {
               urlDeleteBtn.addEventListener("click", () => {
                 const deleteWindowArgs = {
+                  parserId: urlDeleteBtn.dataset.parserid,
                   entityId: urlDeleteBtn.dataset.urlid,
                   entityToDelete: "url",
+                  entityTitle: urlDeleteBtn.dataset.urltitle,
                 };
                 confirmDeleteUrlWindow(deleteWindowArgs); //Вызываем функцию открытия окна с передачей аргументов в виде объекта
               });

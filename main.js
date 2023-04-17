@@ -19,6 +19,7 @@ const { postUrl } = require("./queries.js");
 const { updateUrl } = require("./queries.js");
 const { getUrls } = require("./queries.js");
 const { getRules } = require("./queries.js");
+const { deleteEntity } = require("./queries.js");
 
 //Menu.setApplicationMenu(null);
 
@@ -229,7 +230,7 @@ function openUrlWindow(windowMode, parserId, urlId, urlTitle) {
       urlWindow.show();
     })
     .then(function () {
-      urlWindow.webContents.openDevTools();
+      // urlWindow.webContents.openDevTools();
     });
   // urlWindow.once("ready-to-show", () => {
 }
@@ -310,13 +311,35 @@ function сonfirmDeleteUrlWindow(deleteWindowArgs) {
   confirmDeleteUrlWindow
     .loadFile("./src/windows/confirm-delete/index.html")
     .then(function () {
+      confirmDeleteUrlWindow.webContents.send("send-settings-before-delete", {
+        deleteWindowArgs,
+      });
+    })
+    .then(function () {
       confirmDeleteUrlWindow.show();
     })
     .then(function () {
-      confirmDeleteUrlWindow.webContents.openDevTools();
+      // confirmDeleteUrlWindow.webContents.openDevTools();
     });
-  // confirmDeleteUrlWindow.once("ready-to-show", () => {
 }
+
+ipcMain.handle(
+  "delete-entity",
+  async (event, entityToDelete, entityId, parserId) => {
+    console.log(entityToDelete, entityId, parserId);
+
+    deleteEntity(entityToDelete, entityId, parserId);
+    await mainWindow.webContents.send(
+      "update-urls-table",
+      parserId,
+      (mode = "delete-url")
+    );
+    if (confirmDeleteUrlWindow) {
+      confirmDeleteUrlWindow.hide();
+      confirmDeleteUrlWindow.close();
+    }
+  }
+);
 
 ipcMain.handle("get-urls", (event, parserId) => {
   const urls = getUrls(parserId);
