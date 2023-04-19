@@ -34,8 +34,12 @@ function parserMenuAction() {
   // Обработка нажатия пункта добавления парсера
   addSubmenuItemBtns.forEach((addSubmenuItemBtn) => {
     addSubmenuItemBtn.addEventListener("click", () => {
-      let projectId = addSubmenuItemBtn.parentNode.previousSibling.dataset.id;
-      openAddNewParserWindow(projectId);
+      let parserWindowArgs = {
+        windowMode: "add",
+        projectId: addSubmenuItemBtn.parentNode.previousSibling.dataset.id,
+      };
+      console.log(parserWindowArgs);
+      openParserWindow(parserWindowArgs);
     });
   });
 
@@ -216,8 +220,8 @@ function renderBreadCrumbs(subMenuItem, parserId) {
     "</span>";
 }
 
-function openAddNewParserWindow(projectId) {
-  return window.API.openAddNewParserWindow(projectId);
+function openParserWindow(parserWindowArgs) {
+  return window.API.openParserWindow(parserWindowArgs);
 }
 
 function animateMainMenu() {

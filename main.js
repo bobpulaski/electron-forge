@@ -102,23 +102,24 @@ ipcMain.handle("delete-main-menu-item", (event, id) => {
 });
 
 /***********************New Parser Window START*************************************** */
-ipcMain.handle("open-add-new-parser-window", (event) => {
-  openAddNewParserWindow();
+ipcMain.handle("open-parser-window", (event, parserWindowArgs) => {
+  console.log(parserWindowArgs);
+  openParserWindow(parserWindowArgs);
 });
 
-ipcMain.handle("close-add-new-parser-window", async (event) => {
-  if (addNewParserWindow) {
-    await addNewParserWindow.hide();
-    addNewParserWindow.close();
+ipcMain.handle("close-parser-window", async (event) => {
+  if (parserWindow) {
+    await parserWindow.hide();
+    parserWindow.close();
   }
 });
 
-let addNewParserWindow = null;
-function openAddNewParserWindow() {
-  addNewParserWindow = new BrowserWindow({
+let parserWindow = null;
+function openParserWindow(parserWindowArgs) {
+  parserWindow = new BrowserWindow({
     show: false,
-    width: 600,
-    height: 325, //add 29 px to the header
+    width: 1200,
+    height: 800, //add 29 px to the header
     icon: path.join(__dirname, "src/windows/icon.ico"),
     autoHideMenuBar: true,
     resizable: false,
@@ -132,10 +133,19 @@ function openAddNewParserWindow() {
       preload: path.join(__dirname, "src/windows/parser/preload.js"),
     },
   });
-  addNewParserWindow.loadFile("./src/windows/parser/index.html");
-  addNewParserWindow.once("ready-to-show", () => {
-    addNewParserWindow.show();
-  });
+  parserWindow
+    .loadFile("./src/windows/parser/index.html")
+    .then(function () {
+      parserWindow.webContents.send("send-settings-to-perser-window", {
+        parserWindowArgs,
+      });
+    })
+    .then(function () {
+      parserWindow.show();
+    })
+    .then(function () {
+      parserWindow.webContents.openDevTools();
+    });
 }
 /***********************New Parser Window END*************************************** */
 
@@ -155,7 +165,7 @@ let addNewProjectWindow = null;
 function openAddNewProjectWindow() {
   addNewProjectWindow = new BrowserWindow({
     show: false,
-    width: 600,
+    width: 800,
     height: 325, //add 29 px to the header
     icon: path.join(__dirname, "src/windows/icon.ico"),
     autoHideMenuBar: true,

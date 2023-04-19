@@ -10,8 +10,8 @@ contextBridge.exposeInMainWorld("API", {
   openAddNewProjectWindow: () =>
     ipcRenderer.invoke("open-add-new-project-window"),
 
-  openAddNewParserWindow: (projectId) =>
-    ipcRenderer.invoke("open-add-new-parser-window", projectId),
+  openParserWindow: (parserWindowArgs) =>
+    ipcRenderer.invoke("open-parser-window", parserWindowArgs),
 
   openUrlWindow: (windowMode, parserId, urlId, urlTitle) =>
     ipcRenderer.invoke(
