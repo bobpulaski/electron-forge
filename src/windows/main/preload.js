@@ -34,6 +34,9 @@ contextBridge.exposeInMainWorld("API", {
   onUpdateUrlsTable: (parserId, mode) =>
     ipcRenderer.on("update-urls-table", parserId, mode),
 
+  onHandlerAfterParserCreated: (parserId) =>
+    ipcRenderer.on("handler-on-after-parser-created", parserId),
+
   confirmDeleteUrlWindow: (deleteWindowArgs) => {
     ipcRenderer.invoke("open-confirm-delete-url-window", deleteWindowArgs);
   },

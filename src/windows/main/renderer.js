@@ -23,6 +23,12 @@ window.API.onUpdateMenu((_event, value) => {
   renderMainMenuItems();
 });
 
+window.API.onHandlerAfterParserCreated((_event, parserId) => {
+  console.log(parserId);
+  sweetAlert({ title: "The parser has just been created", icon: "success" });
+  renderMainMenuItems();
+});
+
 // Update Urls Table Via IPC, эмулируя клик по пункту меню
 window.API.onUpdateUrlsTable(async (_event, parserId, mode) => {
   await document.querySelector(`[data-parserid="${parserId}"]`).click();

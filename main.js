@@ -115,9 +115,9 @@ ipcMain.handle("close-parser-window", async (event) => {
 });
 
 ipcMain.handle("add-new-parser", async (event, projectId, parserInputValue) => {
-  postParser(projectId, parserInputValue).then((i) => console.log(i));
-
-  //mainWindow.webContents.send("handler-on-after-parser-created");
+  postParser(projectId, parserInputValue).then((parserId) =>
+    mainWindow.webContents.send("handler-on-after-parser-created", parserId)
+  );
 
   if (parserWindow) {
     parserWindow.hide();
