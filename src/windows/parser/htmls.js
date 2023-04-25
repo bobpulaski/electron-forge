@@ -20,3 +20,19 @@ export function inputTemplate(parserWindowArgs) {
   }
   return template;
 }
+
+export function buttonsTemplate(parserWindowArgs) {
+  let template = "";
+
+  if (parserWindowArgs.windowMode === "add") {
+    template = `<button id="add-new-parser-btn" data-projectid="${parserWindowArgs.projectId}" class="button is-normal is-primary">Add</button>
+                <button id="close-window-btn" class="button is-normal is-light">Cancel</button>`;
+  }
+
+  // windowMode === "add"
+  //   ? (template = `<button id="add-new-url-btn" class="button is-normal is-primary">Add</button>
+  //                  <button id="close-window-btn" class="button is-normal is-light">Cancel</button>`)
+  //   : (template = `<button id="edit-url-btn" class="button is-normal is-primary">Update</button>
+  //                  <button id="close-window-btn" class="button is-normal is-light">Cancel</button>`);
+  return template;
+}

@@ -18,6 +18,7 @@ const { postMainMenuData } = require("./queries.js");
 const { postUrl } = require("./queries.js");
 const { updateUrl } = require("./queries.js");
 const { getUrls } = require("./queries.js");
+const { postParser } = require("./queries.js");
 const { getRules } = require("./queries.js");
 const { deleteEntity } = require("./queries.js");
 
@@ -103,13 +104,23 @@ ipcMain.handle("delete-main-menu-item", (event, id) => {
 
 /***********************New Parser Window START*************************************** */
 ipcMain.handle("open-parser-window", (event, parserWindowArgs) => {
-  console.log(parserWindowArgs);
   openParserWindow(parserWindowArgs);
 });
 
 ipcMain.handle("close-parser-window", async (event) => {
   if (parserWindow) {
     await parserWindow.hide();
+    parserWindow.close();
+  }
+});
+
+ipcMain.handle("add-new-parser", async (event, projectId, parserInputValue) => {
+  postParser(projectId, parserInputValue).then((i) => console.log(i));
+
+  //mainWindow.webContents.send("handler-on-after-parser-created");
+
+  if (parserWindow) {
+    parserWindow.hide();
     parserWindow.close();
   }
 });

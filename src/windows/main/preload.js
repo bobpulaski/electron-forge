@@ -37,4 +37,7 @@ contextBridge.exposeInMainWorld("API", {
   confirmDeleteUrlWindow: (deleteWindowArgs) => {
     ipcRenderer.invoke("open-confirm-delete-url-window", deleteWindowArgs);
   },
+
+  handlerOnAfterParserCreated: () =>
+    ipcRenderer.on("handler-on-after-parser-created"),
 });

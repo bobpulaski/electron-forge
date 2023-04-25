@@ -5,4 +5,8 @@ contextBridge.exposeInMainWorld("API", {
 
   getSettingsToPerserWindow: (message) =>
     ipcRenderer.on("send-settings-to-perser-window", message),
+
+  addNewParser: (projectId, parserInputValue) => {
+    ipcRenderer.invoke("add-new-parser", projectId, parserInputValue);
+  },
 });
