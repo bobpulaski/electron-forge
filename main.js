@@ -10,7 +10,7 @@ const { log } = require("console");
 //const { globalShortcut } = require("electron");
 
 const sqlite3 = require("sqlite3").verbose();
-const db = new sqlite3.Database("parser.sqlite");
+const db = new sqlite3.Database("src/db/parser.sqlite");
 
 const { getMainMenuItems } = require("./queries.js");
 const { getSubMenuItems } = require("./queries.js");

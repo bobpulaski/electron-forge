@@ -24,9 +24,23 @@ window.API.onUpdateMenu((_event, value) => {
 });
 
 window.API.onHandlerAfterParserCreated((_event, parserId) => {
-  console.log(parserId);
-  sweetAlert({ title: "The parser has just been created", icon: "success" });
+  console.log("parser");
   renderMainMenuItems();
+  setTimeout(sayHi, 5);
+  //Костыль для того, чтобы успел отрисоваться DOM
+  function sayHi() {
+    const currentParserItem = document.querySelector(
+      `[data-parserid="${parserId}"]`
+    );
+    console.log("popp ", currentParserItem);
+
+    const parentElement = currentParserItem.parentNode;
+    console.log(parentElement);
+    parentElement.classList.remove("hide");
+    currentParserItem.click();
+
+    sweetAlert({ title: "The parser has just been created", icon: "success" });
+  }
 });
 
 // Update Urls Table Via IPC, эмулируя клик по пункту меню
